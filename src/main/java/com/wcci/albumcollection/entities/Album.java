@@ -2,9 +2,14 @@ package com.wcci.albumcollection.entities;
 
 import java.util.Collection;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
 public class Album {
 	
-	private long id;
+	@Id
+	@GeneratedValue
+	private Long id;
 	private String title;
 	private String imageUrl;
 	private Collection<Song> songs;

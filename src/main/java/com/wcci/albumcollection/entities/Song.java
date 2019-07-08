@@ -2,9 +2,14 @@ package com.wcci.albumcollection.entities;
 
 import java.sql.Time;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
 public class Song {
 	
-	private long id;
+	@Id
+	@GeneratedValue
+	private Long id;
 	private String link;
 	private Time time;
 	
