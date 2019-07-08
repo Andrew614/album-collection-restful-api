@@ -3,9 +3,14 @@ package com.wcci.albumcollection.entities;
 import java.time.LocalDate;
 import java.util.Collection;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
 public class Artist {
 	
-	private long id;
+	@Id
+	@GeneratedValue
+	private Long id;
 	private String name;
 	private String imageUrl;
 	private Collection<Album> albums;
