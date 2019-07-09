@@ -1,48 +1,63 @@
 package com.wcci.albumcollection.entities;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
+@Entity
 public class Artist {
 	
 	@Id
 	@GeneratedValue
 	private Long id;
+	
+	@ManyToMany
+	private Collection<Album> albums;
+	
+	@ManyToMany
+	private Collection<Song> songs;
+	
+	public void addSong(Song song) {
+		if (!songs.contains(song)) {
+			this.songs.add(song);
+		}
+	}
+	
 	private String name;
 	private String imageUrl;
-	private Collection<Album> albums;
 	private LocalDate dateOfBirth;
 	private String homeTown;
 	
-	public Artist(long id, String name, String imageUrl, Collection<Album> albums, LocalDate dateOfBirth,
-			String homeTown) {
+	public Artist(String name, String imageUrl, LocalDate dateOfBirth, String homeTown) {
 		super();
-		this.id = id;
 		this.name = name;
 		this.imageUrl = imageUrl;
-		this.albums = albums;
+		this.albums = Arrays.asList();
 		this.dateOfBirth = dateOfBirth;
 		this.homeTown = homeTown;
 	}
 
-	public Artist(String name, String imageUrl, Collection<Album> albums, LocalDate dateOfBirth, String homeTown) {
-		super();
-		this.name = name;
-		this.imageUrl = imageUrl;
-		this.albums = albums;
-		this.dateOfBirth = dateOfBirth;
-		this.homeTown = homeTown;
-	}
-	
 	public Artist() {
 		
 	}
 
-	public long getId() {
+	public Long getId() {
 		return id;
+	}
+
+	public Collection<Album> getAlbums() {
+		return albums;
+	}
+
+	public Collection<Song> getSongs() {
+		return songs;
 	}
 
 	public String getName() {
@@ -51,10 +66,6 @@ public class Artist {
 
 	public String getImageUrl() {
 		return imageUrl;
-	}
-
-	public Collection<Album> getAlbums() {
-		return albums;
 	}
 
 	public LocalDate getDateOfBirth() {

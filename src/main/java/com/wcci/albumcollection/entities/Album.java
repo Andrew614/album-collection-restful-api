@@ -1,34 +1,38 @@
 package com.wcci.albumcollection.entities;
 
+import java.util.Arrays;
 import java.util.Collection;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
+@Entity
 public class Album {
 	
 	@Id
 	@GeneratedValue
 	private Long id;
+	
+	@ManyToMany(mappedBy = "albums")
+	private Collection<Artist> artists;
+	
+
+	@OneToMany(mappedBy = "album")
+	private Collection<Song> songs;
+	
 	private String title;
 	private String imageUrl;
-	private Collection<Song> songs;
 	private String recordLabel;
 	
-	public Album(long id, String title, String imageUrl, Collection<Song> songs, String recordLabel) {
-		super();
-		this.id = id;
-		this.title = title;
-		this.imageUrl = imageUrl;
-		this.songs = songs;
-		this.recordLabel = recordLabel;
-	}
 
 	public Album(String title, String imageUrl, Collection<Song> songs, String recordLabel) {
 		super();
 		this.title = title;
 		this.imageUrl = imageUrl;
-		this.songs = songs;
 		this.recordLabel = recordLabel;
 	}
 	
@@ -36,8 +40,16 @@ public class Album {
 		
 	}
 
-	public long getId() {
+	public Long getId() {
 		return id;
+	}
+
+	public Collection<Artist> getArtists() {
+		return artists;
+	}
+
+	public Collection<Song> getSongs() {
+		return songs;
 	}
 
 	public String getTitle() {
@@ -46,10 +58,6 @@ public class Album {
 
 	public String getImageUrl() {
 		return imageUrl;
-	}
-
-	public Collection<Song> getSongs() {
-		return songs;
 	}
 
 	public String getRecordLabel() {

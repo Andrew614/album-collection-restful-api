@@ -1,38 +1,63 @@
 package com.wcci.albumcollection.entities;
 
 import java.sql.Time;
+import java.util.Collection;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
+@Entity
 public class Song {
 	
 	@Id
 	@GeneratedValue
 	private Long id;
+	
+
+	@ManyToOne
+	private Album album;
+	
+
+	@ManyToMany(mappedBy = "songs")
+	private Collection<Artist> artists;
+	
+	private String title;
 	private String link;
 	private Time time;
 	
-	public Song(long id, String link, Time time) {
+	
+	public Song(String title, String link, Time time) {
 		super();
-		this.id = id;
+		this.title = title;
 		this.link = link;
 		this.time = time;
 	}
 	
-	public Song(String link, Time time) {
-		super();
-		this.link = link;
-		this.time = time;
-	}
-	
+
+
 	@SuppressWarnings("unused")
 	private Song() {
 		
 	}
 
-	public long getId() {
+	
+	public String getTitle() {
+		return title;
+	}
+
+	public Long getId() {
 		return id;
+	}
+
+	public Album getAlbum() {
+		return album;
+	}
+
+	public Collection<Artist> getArtists() {
+		return artists;
 	}
 
 	public String getLink() {
