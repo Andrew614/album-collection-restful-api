@@ -32,7 +32,6 @@ public class ArtistControllerTest {
 		MockitoAnnotations.initMocks(this);
 		
 	}
-
 	@Test
 	public void shouldReturnListOfArtists() {
 		when(artistRepo.findAll()).thenReturn(Collections.singletonList(mockArtist));

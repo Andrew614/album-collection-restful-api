@@ -10,12 +10,13 @@ public class ArtistController {
 
 	@Autowired
 	private ArtistRepository artistRepo;
-	public Iterable <Artist> findAllArtists() {
+
+	public Iterable<Artist> findAllArtists() {
 		return artistRepo.findAll();
 	}
+
 	public Artist findOneArtist(@PathVariable Long id) {
 		return artistRepo.findById(id).get();
 	}
-
 
 }
