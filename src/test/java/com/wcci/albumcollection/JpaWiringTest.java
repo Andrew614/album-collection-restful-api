@@ -79,10 +79,11 @@ public class JpaWiringTest {
 		songRepo.save(new Song("song", "", null));
 		artistRepo.save(new Artist("dan", "", Year.of(1770),""));
 		artistRepo.findByName("dan").addSong(songRepo.findByTitle("song"));
+		Artist dan = artistRepo.findByName("dan");
+		artistRepo.save(dan);
 		entityManager.flush();
 		entityManager.clear();
-		System.out.println(artistRepo.findByName("dan").getSongs().size() + "look here             Look Here");
-//		assertThat(artistRepo.findByName("dan").getSongs().size(), is(1));
+		assertThat(artistRepo.findByName("dan").getSongs().size(), is(1));
 	}
 
 }

@@ -43,6 +43,8 @@ public class Artist {
 		this.albums = Arrays.asList();
 		this.dateOfBirth = dateOfBirth;
 		this.homeTown = homeTown;
+		this.songs = new ArrayList<Song>();
+		this.albums = new ArrayList<Album>();
 	}
 
 	public Artist() {

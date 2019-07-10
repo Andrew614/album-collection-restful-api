@@ -1,6 +1,6 @@
 package com.wcci.albumcollection.entities;
 
-import java.sql.Time;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.persistence.Entity;
@@ -34,6 +34,7 @@ public class Song {
 		this.title = title;
 		this.link = link;
 		this.time = time;
+		this.artists = new ArrayList<Artist>();
 	}
 	
 

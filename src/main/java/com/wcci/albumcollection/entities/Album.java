@@ -1,13 +1,14 @@
 package com.wcci.albumcollection.entities;
 
-import java.util.Arrays;
+
+
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -34,6 +35,8 @@ public class Album {
 		this.title = title;
 		this.imageUrl = imageUrl;
 		this.recordLabel = recordLabel;
+		this.songs = songs;
+		this.artists = new ArrayList<Artist>();
 	}
 	
 	public Album() {
