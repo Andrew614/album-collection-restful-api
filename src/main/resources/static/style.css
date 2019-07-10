@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin:0;
+    padding:0;
+}
+
+html {
+    font: 20px 'Open Sans', sans-serif;
+}
+
+.invisible {
+    display:none;
+}
+
+img {
+    max-width: 61.8%; 
+}
+
+ul {
+    list-style-type:none;
+}
