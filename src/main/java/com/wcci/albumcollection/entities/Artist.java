@@ -1,6 +1,7 @@
 package com.wcci.albumcollection.entities;
 
-import java.time.LocalDate;
+
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -32,10 +33,10 @@ public class Artist {
 	
 	private String name;
 	private String imageUrl;
-	private LocalDate dateOfBirth;
+	private Year dateOfBirth;
 	private String homeTown;
 	
-	public Artist(String name, String imageUrl, LocalDate dateOfBirth, String homeTown) {
+	public Artist(String name, String imageUrl, Year dateOfBirth, String homeTown) {
 		super();
 		this.name = name;
 		this.imageUrl = imageUrl;
@@ -68,7 +69,7 @@ public class Artist {
 		return imageUrl;
 	}
 
-	public LocalDate getDateOfBirth() {
+	public Year getDateOfBirth() {
 		return dateOfBirth;
 	}
 

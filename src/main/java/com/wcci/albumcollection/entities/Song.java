@@ -26,10 +26,10 @@ public class Song {
 	
 	private String title;
 	private String link;
-	private Time time;
+	private String time;
 	
 	
-	public Song(String title, String link, Time time) {
+	public Song(String title, String link, String time) {
 		super();
 		this.title = title;
 		this.link = link;
@@ -64,7 +64,7 @@ public class Song {
 		return link;
 	}
 
-	public Time getTime() {
+	public String getTime() {
 		return time;
 	}
 
