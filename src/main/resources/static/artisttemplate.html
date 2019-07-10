@@ -11,14 +11,19 @@
 
 <body>
   <div class="wrapper">
-    <header></header>
+    <header class="main-header">
+      <h1 class="main-header__title">Album Collection</h1>
+    </header>
     <main>
       <div class="container">
-        <h3 class="main-title">Reba McEntire</h3>
-        <img class="main-image"
-          src="https://lh3.googleusercontent.com/kolqrHvDWCRx0f-x_d_Qul1tdZZF8CZLb_MlaTOsIKFMR8HVNmdfdJ20saonz2SsyuKvUOpNpwqKg2iPhk5m5Y4" />
-        <h4 class="main-info-header">Born 3/28/1955</h4>
-        <h4 class="main-info-header">Nashville, TN</h4>
+        <div class="info">
+          <h3 class="info__title">Reba McEntire</h3>
+          <img class="info__image"
+            src="https://lh3.googleusercontent.com/kolqrHvDWCRx0f-x_d_Qul1tdZZF8CZLb_MlaTOsIKFMR8HVNmdfdJ20saonz2SsyuKvUOpNpwqKg2iPhk5m5Y4"
+            alt="Reba McEntire" />
+          <h4 class="info__header">Born 3/28/1955</h4>
+          <h4 class="info__header">Nashville, TN</h4>
+        </div> <!-- /title-container -->
         <article class="content">
           <h5 class="content-header">Albums</h5>
           <ul class="content-list">
@@ -58,8 +63,9 @@
               </section> <!-- /content-piece -->
             </li>
           </ul> <!-- /content-list -->
-        </article>
+        </article> <!-- /content -->
       </div> <!-- /container -->
+      <footer class="footer"> <p class="footer__text">&copy; 2019</p></footer>
     </main>
   </div> <!-- /wrapper -->
 </body>
