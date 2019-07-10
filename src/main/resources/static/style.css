@@ -7,7 +7,12 @@
 }
 
 html {
+    --color-background: white;
+    --color-content: black;
     font: 20px 'Open Sans', sans-serif;
+
+    background: var(--color-background);
+    color: var(--color-content);
 }
 
 .invisible {
