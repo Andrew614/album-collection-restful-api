@@ -4,6 +4,8 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.wcci.albumcollection.entities.Artist;
 
+
 public interface ArtistRepository extends CrudRepository<Artist, Long> {
+	Artist findByName(String name);
 
 }

@@ -6,4 +6,6 @@ import com.wcci.albumcollection.entities.Song;
 
 public interface SongRepository extends CrudRepository<Song, Long> {
 
+	Song findByTitle(String title);
+
 }
