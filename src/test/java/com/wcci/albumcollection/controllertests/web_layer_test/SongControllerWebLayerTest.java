@@ -1,9 +1,9 @@
 package com.wcci.albumcollection.controllertests.web_layer_test;
 
-import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.Collections;
 import java.util.Optional;
@@ -30,14 +30,12 @@ public class SongControllerWebLayerTest {
 	@MockBean
 	SongRepository songRepo;
 	private Song testSong1;
-	private Song testSong2;
 
 	private ObjectMapper mapper = new ObjectMapper();
 
 	@Before
 	public void setup() {
 		testSong1 = new Song("title1", "link1", "time1");
-		testSong2 = new Song("title2", "link2", "time2");
 	}
 
 	@Test
