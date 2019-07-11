@@ -88,7 +88,9 @@ ul {
 .main-header {
   background-color: var(--color-header-footer);
   color: var(--color-header-footer-content);
+  display: flex;
   height: auto;
+  justify-content: space-between;
   position: fixed;
   top: 0;
   padding: 0.5rem 1rem;
@@ -97,6 +99,18 @@ ul {
 
 .main-header__title {
   font-size: 1.5rem;
+}
+
+.nav__list {
+  display: flex;
+}
+
+.nav__list-item {
+  margin-right: 1rem;
+}
+
+.nav__list-item:last-child {
+  margin-right: 0;
 }
 
 .container {
