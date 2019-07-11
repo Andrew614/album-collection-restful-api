@@ -1,0 +1,81 @@
+@import url("https://fonts.googleapis.com/css?family=Work+Sans&display=swap");
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  --color-background: rgb(224, 214, 214);
+  --color-content: black;
+  --color-header-footer-content: #c6c9d2;
+  --color-header-footer: black;
+  font: 20px "Work Sans", sans-serif;
+  color: var(--color-content);
+}
+
+.container {
+  margin-bottom: 2rem;
+  margin-top: 3.25rem;
+  padding: 0 1rem;
+}
+
+.footer {
+  background-color: var(--color-header-footer);
+  color: var(--color-header-footer-content);
+  font-size: small;
+  height: auto;
+  padding: 0.25rem 1rem;
+  position: fixed;
+  bottom: 0;
+  width: 100vw;
+}
+
+.footer__text {
+  margin: auto;
+}
+
+.image {
+  size: 100px;
+}
+
+.info {
+  padding-bottom: 1rem;
+}
+
+.info__header {
+  font-size: 0.7rem;
+}
+
+.info__title {
+  font-size: 1.3rem;
+}
+
+.invisible {
+  display: none;
+}
+
+.main-header {
+  background-color: var(--color-header-footer);
+  color: var(--color-header-footer-content);
+  height: auto;
+  position: fixed;
+  top: 0;
+  padding: 0.5rem 1rem;
+  width: 100%;
+}
+
+.main-header__title {
+  font-size: 1.5rem;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.wrapper {
+  /* display: grid;
+    grid-template-rows: auto auto 2rem; */
+  max-width: 95vw;
+  padding: 0;
+}
