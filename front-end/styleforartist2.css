@@ -6,9 +6,9 @@
 }
 
 html {
-  --color-background: rgb(224, 214, 214);
+  --color-background: rgb(238, 227, 227);
   --color-content: black;
-  --color-header-footer-content: #c6c9d2;
+  --color-header-footer-content: #dbdde0;
   --color-header-footer: black;
   font: 20px "Work Sans", sans-serif;
   color: var(--color-content);
@@ -36,7 +36,8 @@ html {
 }
 
 .image {
-  size: 100px;
+  width: 6rem;
+  height: 5rem;
 }
 
 .info {
