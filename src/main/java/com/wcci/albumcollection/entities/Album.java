@@ -8,7 +8,7 @@ import java.util.Collection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -18,8 +18,8 @@ public class Album {
 	@GeneratedValue
 	private Long id;
 	
-	@ManyToMany(mappedBy = "albums")
-	private Collection<Artist> artists;
+	@ManyToOne
+	private Artist artist;
 	
 
 	@OneToMany(mappedBy = "album")
@@ -36,7 +36,6 @@ public class Album {
 		this.imageUrl = imageUrl;
 		this.recordLabel = recordLabel;
 		this.songs = songs;
-		this.artists = new ArrayList<Artist>();
 	}
 	
 	public Album() {
@@ -47,9 +46,6 @@ public class Album {
 		return id;
 	}
 
-	public Collection<Artist> getArtists() {
-		return artists;
-	}
 
 	public Collection<Song> getSongs() {
 		return songs;
@@ -65,6 +61,16 @@ public class Album {
 
 	public String getRecordLabel() {
 		return recordLabel;
+	}
+	
+	public void addSong(Song song) {
+		if (doesNotContainSong(song)) {
+			this.songs.add(song);
+		}
+	}
+	
+	private boolean doesNotContainSong(Song song) {
+		return !songs.contains(song);
 	}
 
 	@Override

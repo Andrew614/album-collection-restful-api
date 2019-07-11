@@ -6,7 +6,6 @@ import java.util.Collection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 @Entity
@@ -20,9 +19,6 @@ public class Song {
 	@ManyToOne
 	private Album album;
 	
-
-	@ManyToMany(mappedBy = "songs")
-	private Collection<Artist> artists;
 	
 	private String title;
 	private String link;
@@ -34,7 +30,6 @@ public class Song {
 		this.title = title;
 		this.link = link;
 		this.time = time;
-		this.artists = new ArrayList<Artist>();
 	}
 	
 
@@ -57,9 +52,6 @@ public class Song {
 		return album;
 	}
 
-	public Collection<Artist> getArtists() {
-		return artists;
-	}
 
 	public String getLink() {
 		return link;
