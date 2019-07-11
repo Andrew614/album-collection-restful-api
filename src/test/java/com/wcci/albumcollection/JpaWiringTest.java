@@ -49,7 +49,7 @@ public class JpaWiringTest {
 	}
 	@Test
 	public void shouldSaveAndLoadAlbum() {
-	albumRepo.save(new Album("album","",null,""));
+	albumRepo.save(new Album("dans songs","",null,""));
 	assertThat(albumRepo.findByTitle("album").getTitle(), is("album"));
 	}
 	@Test
@@ -62,14 +62,13 @@ public class JpaWiringTest {
 	
 	@Test
 	public void shouldCreatObjectsInRepos() {
-		albumRepo.save(new Album("album","",null,""));
+		albumRepo.save(new Album("dans songs","",null,""));
 		songRepo.save(new Song("song","",null));
 		Artist dan = new Artist("dan","", Year.of(1770),"");
 		artistRepo.save(dan);
 //		entityManager.persist(dan);
 		entityManager.flush();
 		entityManager.clear();
-		System.out.println(artistRepo.findAll() + "lalalalalalalal");
 		assertThat(artistRepo.findByName("dan").getName(), is("dan"));	
 	}
 
