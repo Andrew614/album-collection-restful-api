@@ -49,7 +49,7 @@ public class JpaWiringTest {
 	}
 	@Test
 	public void shouldSaveAndLoadAlbum() {
-	albumRepo.save(new Album("album","",null,""));
+	albumRepo.save(new Album("dans songs","",null,""));
 	assertThat(albumRepo.findByTitle("album").getTitle(), is("album"));
 	}
 	@Test
@@ -62,14 +62,13 @@ public class JpaWiringTest {
 	
 	@Test
 	public void shouldCreatObjectsInRepos() {
-		albumRepo.save(new Album("album","",null,""));
+		albumRepo.save(new Album("dans songs","",null,""));
 		songRepo.save(new Song("song","",null));
 		Artist dan = new Artist("dan","", Year.of(1770),"");
 		artistRepo.save(dan);
-		entityManager.persist(dan);
+//		entityManager.persist(dan);
 		entityManager.flush();
 		entityManager.clear();
-		System.out.println(artistRepo.findAll() + "lalalalalalalal");
 		assertThat(artistRepo.findByName("dan").getName(), is("dan"));	
 	}
 
@@ -78,12 +77,12 @@ public class JpaWiringTest {
 		albumRepo.save(new Album("dans songs", "", null,""));
 		songRepo.save(new Song("song", "", null));
 		artistRepo.save(new Artist("dan", "", Year.of(1770),""));
-		artistRepo.findByName("dan").addSong(songRepo.findByTitle("song"));
+		albumRepo.findByTitle("dans songs").addSong(songRepo.findByTitle("song"));
 		Artist dan = artistRepo.findByName("dan");
 		artistRepo.save(dan);
 		entityManager.flush();
 		entityManager.clear();
-		assertThat(artistRepo.findByName("dan").getSongs().size(), is(1));
+		assertThat(albumRepo.findByTitle("dans songs").getSongs().size(), is(1));
 	}
 
 }

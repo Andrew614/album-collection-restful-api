@@ -1,6 +1,5 @@
 package com.wcci.albumcollection.entities;
 
-
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,33 +8,23 @@ import java.util.Collection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 @Entity
 public class Artist {
-	
+
 	@Id
 	@GeneratedValue
 	private Long id;
-	
-	@ManyToMany
+
+	@OneToMany(mappedBy = "artist")
 	private Collection<Album> albums;
-	
-	@ManyToMany
-	private Collection<Song> songs;
-	
-	public void addSong(Song song) {
-		if (!songs.contains(song)) {
-			this.songs.add(song);
-		}
-	}
-	
+
 	private String name;
 	private String imageUrl;
 	private Year dateOfBirth;
 	private String homeTown;
-	
+
 	public Artist(String name, String imageUrl, Year dateOfBirth, String homeTown) {
 		super();
 		this.name = name;
@@ -43,12 +32,11 @@ public class Artist {
 		this.albums = Arrays.asList();
 		this.dateOfBirth = dateOfBirth;
 		this.homeTown = homeTown;
-		this.songs = new ArrayList<Song>();
 		this.albums = new ArrayList<Album>();
 	}
 
 	public Artist() {
-		
+
 	}
 
 	public Long getId() {
@@ -57,10 +45,6 @@ public class Artist {
 
 	public Collection<Album> getAlbums() {
 		return albums;
-	}
-
-	public Collection<Song> getSongs() {
-		return songs;
 	}
 
 	public String getName() {
@@ -100,5 +84,5 @@ public class Artist {
 			return false;
 		return true;
 	}
-	
+
 }
