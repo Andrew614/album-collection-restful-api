@@ -34,10 +34,28 @@ html {
   color: var(--color-content);
 }
 
-.container {
-  margin-bottom: 2rem;
-  margin-top: 3.25rem;
-  padding: 0 1rem;
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  color: white;
+}
+
+img {
+  max-width: 61.8%;
+}
+
+img:hover {
+  transform: scale(1.05);
+}
+
+ul {
+  list-style-type: none;
+}
+
+.album {
+  margin-left: 1rem;
 }
 
 .footer {
@@ -49,14 +67,6 @@ html {
   position: fixed;
   bottom: 0;
   width: 100vw;
-}
-
-.footer__text {
-  margin: auto;
-}
-
-img {
-  max-width: 61.8%;
 }
 
 .info {
@@ -89,13 +99,15 @@ img {
   font-size: 1.5rem;
 }
 
-ul {
-  list-style-type: none;
+.container {
+  margin-bottom: 2rem;
+  margin-top: 3.25rem;
+  padding: 0 1rem;
 }
 
 .wrapper {
   /* display: grid;
-    grid-template-rows: auto auto 2rem; */
+  grid-template-rows: auto auto 2rem; */
   max-width: 95vw;
   padding: 0;
 }
