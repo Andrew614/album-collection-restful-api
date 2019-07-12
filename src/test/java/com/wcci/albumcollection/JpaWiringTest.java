@@ -1,11 +1,9 @@
 package com.wcci.albumcollection;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.junit.Assert.assertThat;
 
 import java.time.Year;
-import java.util.Date;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -50,11 +48,11 @@ public class JpaWiringTest {
 	@Test
 	public void shouldSaveAndLoadAlbum() {
 	albumRepo.save(new Album("dans songs","",null,""));
-	assertThat(albumRepo.findByTitle("album").getTitle(), is("album"));
+	assertThat(albumRepo.findByTitle("dans songs").getTitle(), is("dans songs"));
 	}
 	@Test
 	public void shouldSaveAndLoadArtist() {
-		Artist dan = new Artist("dan","", Year.of(1770),"");
+		Artist dan = new Artist("dan","", "1770","");
 		artistRepo.save(dan);
 		assertThat(artistRepo.findByName("dan").getName(), is("dan"));
 	}
@@ -64,11 +62,9 @@ public class JpaWiringTest {
 	public void shouldCreatObjectsInRepos() {
 		albumRepo.save(new Album("dans songs","",null,""));
 		songRepo.save(new Song("song","",null));
-		Artist dan = new Artist("dan","", Year.of(1770),"");
+		Artist dan = new Artist("dan","", "1770","");
 		artistRepo.save(dan);
-//		entityManager.persist(dan);
-		entityManager.flush();
-		entityManager.clear();
+		flushAndClearEntityManager();
 		assertThat(artistRepo.findByName("dan").getName(), is("dan"));	
 	}
 
@@ -76,13 +72,19 @@ public class JpaWiringTest {
 	public void shouldHaveNameGettersForRepos() {
 		albumRepo.save(new Album("dans songs", "", null,""));
 		songRepo.save(new Song("song", "", null));
-		artistRepo.save(new Artist("dan", "", Year.of(1770),""));
-		albumRepo.findByTitle("dans songs").addSong(songRepo.findByTitle("song"));
-		Artist dan = artistRepo.findByName("dan");
-		artistRepo.save(dan);
+		artistRepo.save(new Artist("dan", "", "1770",""));
+		flushAndClearEntityManager();
+		Album retrievedAlbum = albumRepo.findByTitle("dans songs");
+		Song retrievedSong = songRepo.findByTitle("song");
+		retrievedAlbum.addSong(retrievedSong);
+		albumRepo.save(retrievedAlbum);
+		flushAndClearEntityManager();
+		assertThat(albumRepo.findByTitle("dans songs").getSongs().size(), is(1));
+	}
+
+	private void flushAndClearEntityManager() {
 		entityManager.flush();
 		entityManager.clear();
-		assertThat(albumRepo.findByTitle("dans songs").getSongs().size(), is(1));
 	}
 
 }

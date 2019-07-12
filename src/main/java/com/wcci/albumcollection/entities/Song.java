@@ -1,8 +1,5 @@
 package com.wcci.albumcollection.entities;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -15,7 +12,6 @@ public class Song {
 	@GeneratedValue
 	private Long id;
 	
-
 	@ManyToOne
 	private Album album;
 	
@@ -26,7 +22,6 @@ public class Song {
 	
 	
 	public Song(String title, String link, String time) {
-		super();
 		this.title = title;
 		this.link = link;
 		this.time = time;

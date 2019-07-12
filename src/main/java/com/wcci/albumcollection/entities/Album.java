@@ -19,9 +19,8 @@ public class Album {
 	
 	@ManyToOne
 	private Artist artist;
-	
 
-	@OneToMany(mappedBy = "album")
+	@OneToMany
 	private Collection<Song> songs;
 	
 	private String title;
@@ -36,7 +35,8 @@ public class Album {
 		this.songs = songs;
 	}
 	
-	public Album() {
+	@SuppressWarnings("unused")
+	private Album() {
 		
 	}
 
