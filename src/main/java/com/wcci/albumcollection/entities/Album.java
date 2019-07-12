@@ -2,7 +2,6 @@ package com.wcci.albumcollection.entities;
 
 
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.persistence.Entity;
@@ -31,7 +30,6 @@ public class Album {
 	
 
 	public Album(String title, String imageUrl, Collection<Song> songs, String recordLabel) {
-		super();
 		this.title = title;
 		this.imageUrl = imageUrl;
 		this.recordLabel = recordLabel;
