@@ -1,8 +1,6 @@
 package com.wcci.albumcollection.entities;
 
-import java.time.Year;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 
 import javax.persistence.Entity;
@@ -22,20 +20,19 @@ public class Artist {
 
 	private String name;
 	private String imageUrl;
-	private Year dateOfBirth;
+	private String dateOfBirth;
 	private String homeTown;
 
-	public Artist(String name, String imageUrl, Year dateOfBirth, String homeTown) {
-		super();
+	public Artist(String name, String imageUrl, String dateOfBirth, String homeTown) {
 		this.name = name;
 		this.imageUrl = imageUrl;
-		this.albums = Arrays.asList();
 		this.dateOfBirth = dateOfBirth;
 		this.homeTown = homeTown;
 		this.albums = new ArrayList<Album>();
 	}
 
-	public Artist() {
+	@SuppressWarnings("unused")
+	private Artist() {
 
 	}
 
@@ -55,7 +52,7 @@ public class Artist {
 		return imageUrl;
 	}
 
-	public Year getDateOfBirth() {
+	public String getDateOfBirth() {
 		return dateOfBirth;
 	}
 
@@ -67,7 +64,8 @@ public class Artist {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
 
@@ -80,9 +78,18 @@ public class Artist {
 		if (getClass() != obj.getClass())
 			return false;
 		Artist other = (Artist) obj;
-		if (id != other.id)
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
 			return false;
 		return true;
 	}
 
+	
 }
