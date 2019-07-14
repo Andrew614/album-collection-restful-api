@@ -34,7 +34,9 @@ public class Album {
 		this.recordLabel = recordLabel;
 		this.songs = songs;
 	}
-	
+	public Album(String title) {
+		this.title = title;
+	}
 	@SuppressWarnings("unused")
 	private Album() {
 		

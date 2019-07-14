@@ -65,7 +65,7 @@ public class SongControllerWebLayerTest {
 	@Test
 	public void postSingleSong() throws Exception {
 		when(songRepo.save(any(Song.class))).thenReturn(testSong1);
-		mockMvc.perform(post("/api/songs/test").content("title1")).andExpect(status().isOk())
+		mockMvc.perform(post("/api/songs/title1").content("title1")).andExpect(status().isOk())
 				.andExpect(jsonPath("$.title", is("title1")));
 	}
 
