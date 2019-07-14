@@ -5,6 +5,7 @@ import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -34,21 +35,21 @@ public class SongControllerWebLayerTest {
 	@MockBean
 	SongRepository songRepo;
 	private Song testSong1;
+	private Song testSong2;
 
 	private ObjectMapper mapper = new ObjectMapper();
 
 	@Before
 	public void setup() {
 		testSong1 = new Song("title1", "link1", "time1");
+		testSong2 = new Song("title2", "link1", "time1");
 	}
 
 	@Test
 	public void fetchCollectionOfSongs() throws Exception {
 		when(songRepo.findAll()).thenReturn(Collections.singletonList(testSong1));
-		mockMvc.perform(get("/api/songs"))
-				.andExpect(status().isOk())
-				.andExpect(content().contentType("application/json;charset=UTF-8"))
-				.andExpect(content().json("[{}]"))
+		mockMvc.perform(get("/api/songs")).andExpect(status().isOk())
+				.andExpect(content().contentType("application/json;charset=UTF-8")).andExpect(content().json("[{}]"))
 				.andExpect(content().json(mapper.writeValueAsString(Collections.singletonList(testSong1)), true));
 
 	}
@@ -56,30 +57,26 @@ public class SongControllerWebLayerTest {
 	@Test
 	public void fetchSingleSong() throws Exception {
 		when(songRepo.findById(1L)).thenReturn(Optional.of(testSong1));
-		mockMvc.perform(get("/api/songs/1"))
-				.andExpect(status().isOk())
-				.andExpect(content().contentType("application/json;charset=UTF-8"))
-				.andExpect(content().json("{}"))
+		mockMvc.perform(get("/api/songs/1")).andExpect(status().isOk())
+				.andExpect(content().contentType("application/json;charset=UTF-8")).andExpect(content().json("{}"))
 				.andExpect(content().json(mapper.writeValueAsString(testSong1), true));
 	}
-	
+
 	@Test
 	public void postSingleSong() throws Exception {
 		when(songRepo.save(any(Song.class))).thenReturn(testSong1);
-		mockMvc.perform(post("/api/songs/test").content(mapper.writeValueAsString(testSong1)))
-				.andExpect(status().isOk())
+		mockMvc.perform(post("/api/songs/test").content("title1")).andExpect(status().isOk())
 				.andExpect(jsonPath("$.title", is("title1")));
-//				.andExpect(jsonPath("$", is(mapper.writeValueAsString(testSong1))))
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	@Test
+	public void shouldChangeSongTitle() throws Exception {
+		when(songRepo.findById(1L)).thenReturn(Optional.of(testSong1));
+		String title = "other title";
+		when(songRepo.save(any(Song.class))).thenReturn(new Song(title));
+
+		mockMvc.perform(put("/api/songs/1/" + title)).andExpect(status().isOk())
+				.andExpect(jsonPath("$.title", is("other title")));
+	}
+
 }
