@@ -1,8 +1,12 @@
 package com.wcci.albumcollection.controllertests.web_layer_test;
 
+import static org.hamcrest.Matchers.is;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.ArrayList;
@@ -33,7 +37,7 @@ public class AlbumControllerWebLayerTest {
 	@MockBean
 	AlbumRepository albumRepo;
 	private Album testAlbum;
-	
+	private Album album2;
 	private Song song1;
 	private Song song2;
 	private Collection<Song> songCollection;
@@ -48,31 +52,31 @@ public class AlbumControllerWebLayerTest {
 		songCollection.add(song1);
 		songCollection.add(song2);
 		testAlbum = new Album("title", "imageUrl", songCollection, "recordLabel");
+		album2 = new Album("title2");
 		
 	}
 	@Test
 	public void fetchCollectionOfAlbums() throws Exception {
 		when(albumRepo.findAll()).thenReturn(Collections.singletonList(testAlbum));
-		mockMvc.perform(get("/api/albums"))
-		.andExpect(status().isOk())
-		.andExpect(content().contentType("application/json;charset=UTF-8"))
-		.andExpect(content().json("[{}]"))
-		.andExpect(content().json(mapper.writeValueAsString(Collections.singletonList(testAlbum)), true));
+		mockMvc.perform(get("/api/albums")).andExpect(status().isOk())
+				.andExpect(content().contentType("application/json;charset=UTF-8")).andExpect(content().json("[{}]"))
+				.andExpect(content().json(mapper.writeValueAsString(Collections.singletonList(testAlbum)), true));
 	}
-	
+
 	@Test
 	public void fetchSingleAlbum() throws Exception {
 		when(albumRepo.findById(1L)).thenReturn(Optional.of(testAlbum));
-		mockMvc.perform(get("/api/albums/1"))
-		.andExpect(status().isOk())
-		.andExpect(content().contentType("application/json;charset=UTF-8"))
-		.andExpect(content().json("{}"))
-		.andExpect(content().json(mapper.writeValueAsString(testAlbum), true));
+		mockMvc.perform(get("/api/albums/1")).andExpect(status().isOk())
+				.andExpect(content().contentType("application/json;charset=UTF-8")).andExpect(content().json("{}"))
+				.andExpect(content().json(mapper.writeValueAsString(testAlbum), true));
 	}
-	
-	
-	
-	
+
+	@Test
+	public void postSingleAlbum() throws Exception {
+		when(albumRepo.save(album2)).thenReturn(album2);
+		mockMvc.perform(post("/api/albums/title2").content("title2")).andExpect(status().isOk())
+				.andExpect(jsonPath("$.title", is("title2")));
+	}
 	
 	
 }

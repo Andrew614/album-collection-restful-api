@@ -27,7 +27,9 @@ public class Song {
 		this.time = time;
 	}
 	
-
+	public Song(String title) {
+		this.title = title;
+	}
 
 	@SuppressWarnings("unused")
 	private Song() {
@@ -76,6 +78,11 @@ public class Song {
 		if (id != other.id)
 			return false;
 		return true;
+	}
+
+	public void changeTitle(String newTitle) {
+		title = newTitle;
+		
 	}
 	
 	
