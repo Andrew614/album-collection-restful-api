@@ -1,8 +1,12 @@
 package com.wcci.albumcollection.controllertests.web_layer_test;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.Collections;
@@ -58,4 +62,24 @@ public class SongControllerWebLayerTest {
 				.andExpect(content().json("{}"))
 				.andExpect(content().json(mapper.writeValueAsString(testSong1), true));
 	}
+	
+	@Test
+	public void postSingleSong() throws Exception {
+		when(songRepo.save(any(Song.class))).thenReturn(testSong1);
+		mockMvc.perform(post("/api/songs/test").content(mapper.writeValueAsString(testSong1)))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.title", is("title1")));
+//				.andExpect(jsonPath("$", is(mapper.writeValueAsString(testSong1))))
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

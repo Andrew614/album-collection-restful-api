@@ -26,8 +26,6 @@ public class Song {
 		this.link = link;
 		this.time = time;
 	}
-	
-
 
 	@SuppressWarnings("unused")
 	private Song() {
