@@ -94,5 +94,9 @@ public class Album {
 			return false;
 		return true;
 	}
+	public void updateTitle(String title) {
+		this.title = title;
+		
+	}
 	
 }

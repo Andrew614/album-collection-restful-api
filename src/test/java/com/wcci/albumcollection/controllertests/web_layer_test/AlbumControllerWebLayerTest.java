@@ -5,6 +5,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -76,6 +77,15 @@ public class AlbumControllerWebLayerTest {
 		when(albumRepo.save(album2)).thenReturn(album2);
 		mockMvc.perform(post("/api/albums/title2").content("title2")).andExpect(status().isOk())
 				.andExpect(jsonPath("$.title", is("title2")));
+	}
+	
+	@Test
+	public void updateAlbumTitle() throws Exception {
+		when(albumRepo.findById(1L)).thenReturn(Optional.of(testAlbum));
+		when(albumRepo.save(any(Album.class))).thenReturn(testAlbum);
+		String title = "updated title";
+		mockMvc.perform(put("/api/albums/1/" + title)).andExpect(status().isOk())
+		.andExpect(jsonPath("$.title", is("updated title")));
 	}
 	
 	

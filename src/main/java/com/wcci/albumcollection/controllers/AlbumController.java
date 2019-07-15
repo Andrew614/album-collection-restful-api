@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,6 +32,13 @@ public class AlbumController {
 	public Album postOneAlbum(@PathVariable String title) {
 		return albumRepo.save(new Album(title));
 
+	}
+	
+	@PutMapping("/albums/{id}/{title}")
+	public Album updateAlbumTitle(@PathVariable long id, @PathVariable String title) {
+		Album albumToUpdate = albumRepo.findById(id).get();
+		albumToUpdate.updateTitle(title);
+		return albumRepo.save(albumToUpdate);
 	}
 
 }
