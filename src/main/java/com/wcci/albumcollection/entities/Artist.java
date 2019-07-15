@@ -36,12 +36,20 @@ public class Artist {
 
 	}
 
+	public Artist(String name) {
+		this.name = name;
+	}
+
 	public Long getId() {
 		return id;
 	}
 
 	public Collection<Album> getAlbums() {
 		return albums;
+	}
+	public void changeName(String updatedName) {
+		this.name = updatedName;
+		
 	}
 
 	public String getName() {
@@ -90,6 +98,7 @@ public class Artist {
 			return false;
 		return true;
 	}
+
 
 	
 }
