@@ -1,19 +1,54 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  --text-color: black;
+  --link-hover-color: grey;
+}
+
+/* All rules */
+
+a {
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--link-hover-color)
+}
+
+.navLinks__link {
+  margin: 0.5rem;
+}
+
+ul {
+  list-style-type: none;
+}
+
+/* Album Page Rules */
+
 .headerHome{
     display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+    flex-wrap: wrap;
+    justify-content: space-between;
     height: 30vh;
     width:  100vw;
     background-color: bisque;
 }
+
 .rotatingRecord{
     display: flex;
     float: left;
 }
+
 .rotatingRecord img{
     height: 32vh;
     width:  20vw;
 }
+
 .navLinks{
   display: flex;
   flex-direction: row;
@@ -23,6 +58,7 @@
   margin-right: 3vh;
   font-size: 1.2em;  
 }
+
 .heroImg {
     
     background-color: chocolate;
@@ -32,19 +68,20 @@
     border-color: black;
     border: 3px;
 }
+
 .heroImg.hidden{
-    
   display: none;
 }
+
 .heroImg img{
     height:60vh;
     width:80vw;
 }
 
 .homeFooter small{
-color: white;
-
+    color: white;
 }
+
 .homeFooter{
     height:8vh;
     background-color: darkblue;
