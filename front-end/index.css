@@ -29,11 +29,18 @@
     text-align: center;
     height: 60vh;
     width:100vw;
+    border-color: black;
+    border: 3px;
+}
+.heroImg.hidden{
+    
+  display: none;
 }
 .heroImg img{
     height:60vh;
     width:80vw;
 }
+
 .homeFooter small{
 color: white;
 
