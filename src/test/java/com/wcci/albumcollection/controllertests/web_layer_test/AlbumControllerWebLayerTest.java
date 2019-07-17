@@ -10,8 +10,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Optional;
 
@@ -27,7 +25,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wcci.albumcollection.controllers.AlbumController;
 import com.wcci.albumcollection.entities.Album;
-import com.wcci.albumcollection.entities.Song;
+import com.wcci.albumcollection.entities.Artist;
 import com.wcci.albumcollection.repositories.AlbumRepository;
 
 @WebMvcTest(AlbumController.class)
@@ -37,25 +35,19 @@ public class AlbumControllerWebLayerTest {
 	MockMvc mockMvc;
 	@MockBean
 	AlbumRepository albumRepo;
+	private Artist artist;
 	private Album testAlbum;
 	private Album album2;
-	private Song song1;
-	private Song song2;
-	private Collection<Song> songCollection;
-	
 	private ObjectMapper mapper = new ObjectMapper();
-	
+
 	@Before
 	public void setup() {
-		song1 = new Song("title1", "link1", "time1");
-		song2 = new Song("title2", "link2", "time2");
-		songCollection = new ArrayList<Song>();
-		songCollection.add(song1);
-		songCollection.add(song2);
-		testAlbum = new Album("title", "imageUrl", songCollection, "recordLabel");
-		album2 = new Album("title2");
-		
+		artist = new Artist("name", "imageUrl", "DOB", "Home Town");
+		testAlbum = new Album(artist, "title", "imageUrl", "recordLabel");
+		album2 = new Album(artist, "title2", "imageUrl2", "recordlabel2");
+
 	}
+
 	@Test
 	public void fetchCollectionOfAlbums() throws Exception {
 		when(albumRepo.findAll()).thenReturn(Collections.singletonList(testAlbum));
@@ -78,15 +70,14 @@ public class AlbumControllerWebLayerTest {
 		mockMvc.perform(post("/api/albums/title2").content("title2")).andExpect(status().isOk())
 				.andExpect(jsonPath("$.title", is("title2")));
 	}
-	
+
 	@Test
 	public void updateAlbumTitle() throws Exception {
 		when(albumRepo.findById(1L)).thenReturn(Optional.of(testAlbum));
 		when(albumRepo.save(any(Album.class))).thenReturn(testAlbum);
 		String title = "updated title";
 		mockMvc.perform(put("/api/albums/1/" + title)).andExpect(status().isOk())
-		.andExpect(jsonPath("$.title", is("updated title")));
+				.andExpect(jsonPath("$.title", is("updated title")));
 	}
-	
-	
+
 }

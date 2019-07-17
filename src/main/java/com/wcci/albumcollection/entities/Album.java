@@ -16,23 +16,25 @@ public class Album {
 	@Id
 	@GeneratedValue
 	private Long id;
-	
+
 	@ManyToOne
 	private Artist artist;
+
+	private String title;
+	
 
 	@OneToMany
 	private Collection<Song> songs;
 	
-	private String title;
 	private String imageUrl;
 	private String recordLabel;
 	
 
-	public Album(String title, String imageUrl, Collection<Song> songs, String recordLabel) {
+	public Album(Artist artist, String title, String imageUrl, String recordLabel) {
+		this.artist = artist;
 		this.title = title;
 		this.imageUrl = imageUrl;
 		this.recordLabel = recordLabel;
-		this.songs = songs;
 	}
 	public Album(String title) {
 		this.title = title;

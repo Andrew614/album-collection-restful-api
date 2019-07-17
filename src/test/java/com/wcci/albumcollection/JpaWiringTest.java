@@ -1,10 +1,10 @@
 package com.wcci.albumcollection;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.junit.Assert.assertThat;
 
-import java.time.Year;
-
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,55 +31,75 @@ public class JpaWiringTest {
 
 	@Autowired
 	private ArtistRepository artistRepo;
-
+	
 	@Autowired
 	private SongRepository songRepo;
+
+	private Artist dan;
+	private Album dansAlbum;
+	private Song dansSong;
+	
+	@Before
+	public void setup() {
+		dan = new Artist("dan","", "1770","");
+		artistRepo.save(dan);
+		dansAlbum = new Album(dan, "dans songs","imageurl","dans label");
+		albumRepo.save(dansAlbum);
+		dansSong = new Song(dansAlbum, "dans only hit", "https://www.youtube.com/watch?v=6zXDo4dL7SU", "0:04");
+		songRepo.save(dansSong);
+		flushAndClearEntityManager();
+	}
 
 	@Test
 	public void shouldStartJPATestFrameWork() {
 
 	}
-
-	@Test
-	public void shouldSaveAndLoadSong() {
-	songRepo.save(new Song("song","",null));
-	assertThat(songRepo.findByTitle("song").getTitle(), is("song"));
-	}
-	@Test
-	public void shouldSaveAndLoadAlbum() {
-	albumRepo.save(new Album("dans songs","",null,""));
-	assertThat(albumRepo.findByTitle("dans songs").getTitle(), is("dans songs"));
-	}
+	
 	@Test
 	public void shouldSaveAndLoadArtist() {
-		Artist dan = new Artist("dan","", "1770","");
-		artistRepo.save(dan);
 		assertThat(artistRepo.findByName("dan").getName(), is("dan"));
 	}
 	
+	@Test
+	public void shouldSaveAndLoadAlbum() {
+		assertThat(albumRepo.findByTitle("dans songs").getTitle(), is("dans songs"));
+	}
 	
 	@Test
-	public void shouldCreatObjectsInRepos() {
-		albumRepo.save(new Album("dans songs","",null,""));
-		songRepo.save(new Song("song","",null));
-		Artist dan = new Artist("dan","", "1770","");
-		artistRepo.save(dan);
-		flushAndClearEntityManager();
-		assertThat(artistRepo.findByName("dan").getName(), is("dan"));	
+	public void shouldSaveAndLoadSong() {
+	assertThat(songRepo.findByTitle("dans only hit").getTitle(), is("dans only hit"));
 	}
 
 	@Test
 	public void shouldHaveNameGettersForRepos() {
-		albumRepo.save(new Album("dans songs", "", null,""));
-		songRepo.save(new Song("song", "", null));
-		artistRepo.save(new Artist("dan", "", "1770",""));
-		flushAndClearEntityManager();
+		Artist retrievedArtist = artistRepo.findByName("dan");
 		Album retrievedAlbum = albumRepo.findByTitle("dans songs");
-		Song retrievedSong = songRepo.findByTitle("song");
-		retrievedAlbum.addSong(retrievedSong);
-		albumRepo.save(retrievedAlbum);
+		Song retrievedSong = songRepo.findByTitle("dans only hit");
+		assertThat(retrievedArtist, is(dan));
+		assertThat(retrievedAlbum, is(dansAlbum));
+		assertThat(retrievedSong, is(dansSong));
+	}
+	
+	@Test
+	public void shouldAddAnotherAlbumToArtist() {
+		Album newAlbum;
+		newAlbum = new Album(dan, "more dans songs", "imageurl2","dans label");
+		albumRepo.save(newAlbum);
 		flushAndClearEntityManager();
-		assertThat(albumRepo.findByTitle("dans songs").getSongs().size(), is(1));
+		Iterable<Album> albums;
+		albums = albumRepo.findAll();
+		assertThat(albums, containsInAnyOrder(dansAlbum, newAlbum));
+	}
+	
+	@Test
+	public void shouldAddAnotherSongToAlbum() {
+		Song newSong;
+		newSong = new Song(dansAlbum, "dans not hit", "no link to be found", "0:01");
+		songRepo.save(newSong);
+		flushAndClearEntityManager();
+		Iterable<Song> songs;
+		songs = songRepo.findAll();
+		assertThat(songs, containsInAnyOrder(dansSong, newSong));
 	}
 
 	private void flushAndClearEntityManager() {
