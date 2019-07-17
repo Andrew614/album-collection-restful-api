@@ -21,7 +21,8 @@ public class Song {
 	private String time;
 	
 	
-	public Song(String title, String link, String time) {
+	public Song(Album album, String title, String link, String time) {
+		this.album = album;
 		this.title = title;
 		this.link = link;
 		this.time = time;
