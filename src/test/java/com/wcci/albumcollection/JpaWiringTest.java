@@ -1,6 +1,7 @@
 package com.wcci.albumcollection;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.junit.Assert.assertThat;
 
@@ -14,9 +15,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.wcci.albumcollection.entities.Album;
 import com.wcci.albumcollection.entities.Artist;
+import com.wcci.albumcollection.entities.Comment;
 import com.wcci.albumcollection.entities.Song;
 import com.wcci.albumcollection.repositories.AlbumRepository;
 import com.wcci.albumcollection.repositories.ArtistRepository;
+import com.wcci.albumcollection.repositories.CommentRepository;
 import com.wcci.albumcollection.repositories.SongRepository;
 
 @RunWith(SpringRunner.class)
@@ -35,9 +38,14 @@ public class JpaWiringTest {
 	@Autowired
 	private SongRepository songRepo;
 
+	@Autowired
+	private CommentRepository commentRepo;
+
 	private Artist dan;
 	private Album dansAlbum;
 	private Song dansSong;
+	private Comment newComment;
+
 	
 	@Before
 	public void setup() {
@@ -47,6 +55,8 @@ public class JpaWiringTest {
 		albumRepo.save(dansAlbum);
 		dansSong = new Song(dansAlbum, "dans only hit", "https://www.youtube.com/watch?v=6zXDo4dL7SU", "0:04");
 		songRepo.save(dansSong);
+		newComment = new Comment("I don't think, therefore I ain't.", "Ener Nightcart");
+		commentRepo.save(newComment);
 		flushAndClearEntityManager();
 	}
 
@@ -100,6 +110,18 @@ public class JpaWiringTest {
 		Iterable<Song> songs;
 		songs = songRepo.findAll();
 		assertThat(songs, containsInAnyOrder(dansSong, newSong));
+	}
+	
+	@Test
+	public void shouldMakeNewComment() {
+		Iterable<Comment> comments;
+		comments = commentRepo.findAll();
+		assertThat(comments, contains(newComment));
+	}
+	
+	@Test
+	public void shouldAddCommentToArtist() {
+		
 	}
 
 	private void flushAndClearEntityManager() {
