@@ -4,7 +4,6 @@ package com.wcci.albumcollection.controllertests;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.contains;
 import static org.junit.Assert.assertThat;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import java.util.Collections;
@@ -33,7 +32,6 @@ public class ArtistControllerTest {
 	@Before
 	public void setup() {
 		MockitoAnnotations.initMocks(this);
-		mockArtist2.addComment("foo");
 	}
 	@Test
 	public void shouldReturnListOfArtists() {
@@ -47,16 +45,5 @@ public class ArtistControllerTest {
 		when(artistRepo.findById(1L)).thenReturn(Optional.of(mockArtist));
 		assertThat(underTest.findOneArtist(1L), is(mockArtist));
 	}
-	
-	@Test
-	public void shouldAddCommentToArtist() {
-		when(artistRepo.findById(1L)).thenReturn(Optional.of(mockArtist));
-		when(artistRepo.save(any(Artist.class))).thenReturn(mockArtist2);
-		String comment = "foo";
-		Artist retrievedArtist;
-		retrievedArtist = underTest.addCommentToArtist(1L, comment);
-		assertThat(retrievedArtist, is(mockArtist2));
-	}
-	
 }
 

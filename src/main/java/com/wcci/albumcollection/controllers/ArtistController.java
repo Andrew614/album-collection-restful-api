@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,13 +32,5 @@ public class ArtistController {
 		Artist artist = new Artist(name);
 		return artistRepo.save(artist);
 
-	}
-
-	@PutMapping("/artists/{id}/comments")
-	public Artist addCommentToArtist(@PathVariable Long id, String comment) {
-		Artist artist;
-		artist = artistRepo.findById(id).get();
-		artist.addComment(comment);
-		return artistRepo.save(artist);
 	}
 }
