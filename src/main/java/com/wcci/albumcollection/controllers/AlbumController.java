@@ -47,7 +47,6 @@ public class AlbumController {
 		album = albumRepo.findById(id).get();
 		album.addComment(comment);
 		return albumRepo.save(album);
-		
 	}
 
 }
