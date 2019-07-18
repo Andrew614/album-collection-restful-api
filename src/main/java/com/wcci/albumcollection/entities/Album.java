@@ -1,8 +1,6 @@
 package com.wcci.albumcollection.entities;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,14 +26,11 @@ public class Album {
 	private String imageUrl;
 	private String recordLabel;
 
-	private List<String> comments;
-
 	public Album(Artist artist, String title, String imageUrl, String recordLabel) {
 		this.artist = artist;
 		this.title = title;
 		this.imageUrl = imageUrl;
 		this.recordLabel = recordLabel;
-		this.comments = new ArrayList<String>();
 	}
 
 	public Album(String title) {
@@ -67,10 +62,6 @@ public class Album {
 		return recordLabel;
 	}
 
-	public List<String> getComments() {
-		return comments;
-	}
-
 	public void addSong(Song song) {
 		if (doesNotContainSong(song)) {
 			this.songs.add(song);
@@ -79,10 +70,6 @@ public class Album {
 
 	public void updateTitle(String title) {
 		this.title = title;
-	}
-
-	public void addComment(String comment) {
-		comments.add(comment);
 	}
 
 	private boolean doesNotContainSong(Song song) {

@@ -1,8 +1,13 @@
 package com.wcci.albumcollection.controllertests.web_layer_test;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.Collections;
@@ -16,12 +21,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.Matchers.hasSize;
-import static org.mockito.ArgumentMatchers.any;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wcci.albumcollection.controllers.ArtistController;
 import com.wcci.albumcollection.entities.Artist;
@@ -73,28 +73,14 @@ public class ArtistControllerWebLayerTest {
 		
 		}
 	
-//	@Test
-//	public void shouldUpdateArtistName() throws Exception {
-//		when(artistRepo.findById(1L)).thenReturn(Optional.of(testArtist));
-//		String name = "other name";
-//		when(artistRepo.save(any(Artist.class))).thenReturn(new Artist(name));
-//		
-//		mockMvc.perform(put("/api/artists/1/" + name)).andExpect(status().isOk())
-//		.andExpect(jsonPath("$.name", is("other name")));
-//	}
-	
 	@Test
-	public void shouldAddCommentToArtist() throws Exception {
+	public void shouldUpdateArtistName() throws Exception {
 		when(artistRepo.findById(1L)).thenReturn(Optional.of(testArtist));
-		when(artistRepo.save(any(Artist.class))).thenReturn(testArtist);
-		mockMvc.perform(put("/api/artists/1/comments")).andExpect(status().isOk())
-		.andExpect(jsonPath("$.comments", hasSize(1)));
-	}
-	
-	@Test
-	public void shouldRetrieveAllCommentsFromArtist() throws Exception {
-		when(artistRepo.findById(1L)).thenReturn(Optional.of(testArtist));
-		mockMvc.perform(get("/api/artists/1/comments")).andExpect(status().isOk());
+		String name = "other name";
+		when(artistRepo.save(any(Artist.class))).thenReturn(new Artist(name));
+		
+		mockMvc.perform(put("/api/artists/1/" + name)).andExpect(status().isOk())
+		.andExpect(jsonPath("$.name", is("other name")));
 	}
 	
 }

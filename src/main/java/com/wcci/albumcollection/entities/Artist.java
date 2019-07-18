@@ -2,7 +2,6 @@ package com.wcci.albumcollection.entities;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,15 +23,12 @@ public class Artist {
 	private String dateOfBirth;
 	private String homeTown;
 
-	private List<String> comments;
-
 	public Artist(String name, String imageUrl, String dateOfBirth, String homeTown) {
 		this.name = name;
 		this.imageUrl = imageUrl;
 		this.dateOfBirth = dateOfBirth;
 		this.homeTown = homeTown;
 		this.albums = new ArrayList<Album>();
-		this.comments = new ArrayList<String>();
 	}
 
 	@SuppressWarnings("unused")
@@ -66,14 +62,6 @@ public class Artist {
 
 	public String getHomeTown() {
 		return homeTown;
-	}
-
-	public List<String> getComments() {
-		return comments;
-	}
-
-	public void addComment(String comment) {
-		comments.add(comment);
 	}
 
 	@Override
