@@ -1,9 +1,12 @@
 package com.wcci.albumcollection.entities;
 
+import java.util.Collection;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Song {
@@ -14,6 +17,9 @@ public class Song {
 	
 	@ManyToOne
 	private Album album;
+	
+	@OneToMany
+	private Collection<Comment> comments;
 	
 	
 	private String title;

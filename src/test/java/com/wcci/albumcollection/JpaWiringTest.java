@@ -121,7 +121,26 @@ public class JpaWiringTest {
 	
 	@Test
 	public void shouldAddCommentToArtist() {
-		
+		newComment.addArtist(dan);
+		commentRepo.save(newComment);
+		flushAndClearEntityManager();
+		assertThat(commentRepo.findAll(), contains(newComment));
+	}
+	
+	@Test
+	public void shouldAddCommentToAlbum() {
+		newComment.addAlbum(dansAlbum);
+		commentRepo.save(newComment);
+		flushAndClearEntityManager();
+		assertThat(commentRepo.findAll(), contains(newComment));
+	}
+	
+	@Test
+	public void shouldAddCommentToSong() {
+		newComment.addSong(dansSong);
+		commentRepo.save(newComment);
+		flushAndClearEntityManager();
+		assertThat(commentRepo.findAll(), contains(newComment));
 	}
 
 	private void flushAndClearEntityManager() {
