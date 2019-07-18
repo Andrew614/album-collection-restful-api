@@ -24,10 +24,33 @@
         </header>
         <main>
             <div class="container">
-                <ul class="all-songs-list">
-                    <li class="all-songs-list__item">Song1</li>
-                    <li class="all-songs-list__item">Song2</li>
-                </ul>
+                <section class="content">All Songs List:
+                    <ul class="content-list">
+                        <li class="content-list__item">Song1</li>
+                        <li class="content-list__item">Song2</li>
+                    </ul>
+                </section>
+                <section class="form-container">
+                    <form class="form" action="#">
+                        <h2 class="form__title">Input a new song</h2>
+                        <label class="form__label">Album title:
+                            <select class="form__select">
+                                <option selected></option>
+                                <option value="rebasAlbum1">rebasAlbum1</option>
+                                <option value="lilNasXsAlbum1">lilNasXsAlbum1</option>
+                            </select>
+                        </label>
+                        <label class="form__label">Title:
+                            <input class="form__input" name="title" type="text">
+                        </label>
+                        <label class="form__label">Link:
+                            <input class="form__input" name="link" type="text">
+                        </label>
+                        <label class="form__label" class="">Duration:
+                            <input class="form__input" name="duration" type="text">
+                        </label>
+                    </form>
+                </section>
             </div>
         </main>
         <footer class="footer">
