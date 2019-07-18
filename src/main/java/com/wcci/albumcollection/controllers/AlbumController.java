@@ -40,5 +40,14 @@ public class AlbumController {
 		albumToUpdate.updateTitle(title);
 		return albumRepo.save(albumToUpdate);
 	}
+	
+	@PutMapping("/albums/addcomment/{id}")
+	public Album addCommentToAlbum(@PathVariable long id, String comment) {
+		Album album;
+		album = albumRepo.findById(id).get();
+		album.addComment(comment);
+		return albumRepo.save(album);
+		
+	}
 
 }
