@@ -27,6 +27,7 @@ import com.wcci.albumcollection.controllers.SongController;
 import com.wcci.albumcollection.entities.Album;
 import com.wcci.albumcollection.entities.Artist;
 import com.wcci.albumcollection.entities.Song;
+import com.wcci.albumcollection.repositories.AlbumRepository;
 import com.wcci.albumcollection.repositories.SongRepository;
 
 @WebMvcTest(SongController.class)
@@ -35,18 +36,24 @@ public class SongControllerWebLayerTest {
 	@Autowired
 	MockMvc mockMvc;
 	@MockBean
+	AlbumRepository albumRepo;
+	@MockBean
 	SongRepository songRepo;
+
 	private Artist artist;
 	private Album album;
 	private Song testSong;
 	
+
 	private ObjectMapper mapper = new ObjectMapper();
 
 	@Before
 	public void setup() {
+
 		artist = new Artist("name", "imageUrl", "DOB", "Home Town");
 		album = new Album(artist, "title", "imageUrl", "recordLabel");
 		testSong = new Song(album, "title1", "link1", "time1");
+
 	}
 
 	@Test

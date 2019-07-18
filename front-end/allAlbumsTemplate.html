@@ -24,10 +24,33 @@
         </header>
         <main>
             <div class="container">
-                <ul class="all-albums-list">
-                    <li class="all-albums-list__item">Album1</li>
-                    <li class="all-albums-list__item">Album2</li>
-                </ul>
+                <section class="content">
+                    <ul class="content-list">All Albums List:
+                        <li class="content-list__item">Album1</li>
+                        <li class="content-list__item">Album2</li>
+                    </ul>
+                </section>
+                <section class="form-container">
+                    <form class="form" action="#">
+                        <h2 class="form__title">Input an album</h2>
+                        <label class="form__label">Artist name:
+                            <select class="form__select">
+                                <option selected></option>
+                                <option value="Reba">Reba</option>
+                                <option value="Lil Nas X">Lil Nas X</option>
+                            </select>
+                        </label>
+                        <label class="form__label">Title:
+                            <input class="form__input" name="title" type="text">
+                        </label>
+                        <label class="form__label">ImageURL:
+                            <input class="form__input" name="imageURL" type="text">
+                        </label>
+                        <label class="form__label" class="">Record label:
+                            <input class="form__input" name="recordLabel" type="text">
+                        </label>
+                    </form>
+                </section>
             </div>
         </main>
         <footer class="footer">
