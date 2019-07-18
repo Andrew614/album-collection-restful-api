@@ -24,7 +24,10 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wcci.albumcollection.controllers.SongController;
+import com.wcci.albumcollection.entities.Album;
+import com.wcci.albumcollection.entities.Artist;
 import com.wcci.albumcollection.entities.Song;
+import com.wcci.albumcollection.repositories.AlbumRepository;
 import com.wcci.albumcollection.repositories.SongRepository;
 
 @WebMvcTest(SongController.class)
@@ -33,16 +36,22 @@ public class SongControllerWebLayerTest {
 	@Autowired
 	MockMvc mockMvc;
 	@MockBean
+	AlbumRepository albumRepo;
+	@MockBean
 	SongRepository songRepo;
 	private Song testSong1;
 	private Song testSong2;
+	private Album testAlbum;
+	private Artist testArtist;
+	
 
 	private ObjectMapper mapper = new ObjectMapper();
 
 	@Before
 	public void setup() {
-		testSong1 = new Song("title1", "link1", "time1");
-		testSong2 = new Song("title2", "link1", "time1");
+		testAlbum = new Album(testArtist, "title","imageUrl", "recordLabel");
+		testSong1 = new Song(testAlbum, "title1", "link1", "time1");
+		testSong2 = new Song(testAlbum, "title2", "link1", "time1");
 	}
 
 	@Test
