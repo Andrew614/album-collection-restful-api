@@ -2,6 +2,7 @@ package com.wcci.albumcollection.entities;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,12 +24,15 @@ public class Artist {
 	private String dateOfBirth;
 	private String homeTown;
 
+	private List<String> comments;
+
 	public Artist(String name, String imageUrl, String dateOfBirth, String homeTown) {
 		this.name = name;
 		this.imageUrl = imageUrl;
 		this.dateOfBirth = dateOfBirth;
 		this.homeTown = homeTown;
 		this.albums = new ArrayList<Album>();
+		this.comments = new ArrayList<String>();
 	}
 
 	@SuppressWarnings("unused")
@@ -47,10 +51,6 @@ public class Artist {
 	public Collection<Album> getAlbums() {
 		return albums;
 	}
-	public void changeName(String updatedName) {
-		this.name = updatedName;
-		
-	}
 
 	public String getName() {
 		return name;
@@ -68,12 +68,19 @@ public class Artist {
 		return homeTown;
 	}
 
+	public List<String> getComments() {
+		return comments;
+	}
+
+	public void addComment(String comment) {
+		comments.add(comment);
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
 
@@ -91,14 +98,9 @@ public class Artist {
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
 		return true;
 	}
 
-
 	
+
 }
