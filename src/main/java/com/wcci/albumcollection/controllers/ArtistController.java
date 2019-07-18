@@ -27,18 +27,19 @@ public class ArtistController {
 	public Artist findOneArtist(@PathVariable Long id) {
 		return artistRepo.findById(id).get();
 	}
+
 	@PostMapping("/artists/{name}")
 	public Artist postOneArtist(@PathVariable String name) {
-		Artist artist  = new Artist(name);
+		Artist artist = new Artist(name);
 		return artistRepo.save(artist);
-		
+
 	}
-    @PutMapping("/artists/{id}/{updatedName}")
-    public Artist updateOneArtistName(@PathVariable Long id, @PathVariable String updatedName) {
-    	Artist artist = artistRepo.findById(id).get();
-    	artist.changeName(updatedName);
-    	return artistRepo.save(artist);
-    	
-    
-}
+
+	@PutMapping("/artists/{id}/comments")
+	public Artist addCommentToArtist(@PathVariable Long id, String comment) {
+		Artist artist;
+		artist = artistRepo.findById(id).get();
+		artist.addComment(comment);
+		return artistRepo.save(artist);
+	}
 }

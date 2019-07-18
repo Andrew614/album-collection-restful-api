@@ -79,5 +79,12 @@ public class AlbumControllerWebLayerTest {
 		mockMvc.perform(put("/api/albums/1/" + title)).andExpect(status().isOk())
 				.andExpect(jsonPath("$.title", is("updated title")));
 	}
+	
+	@Test
+	public void addCommentToAlbum() throws Exception {
+		when(albumRepo.findById(1L)).thenReturn(Optional.of(testAlbum));
+		when(albumRepo.save(any(Album.class))).thenReturn(testAlbum);
+		mockMvc.perform(put("/api/albums/addcomment/1")).andExpect(status().isOk());
+	}
 
 }

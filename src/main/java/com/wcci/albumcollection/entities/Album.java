@@ -1,8 +1,8 @@
 package com.wcci.albumcollection.entities;
 
-
-
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,7 +12,7 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class Album {
-	
+
 	@Id
 	@GeneratedValue
 	private Long id;
@@ -21,33 +21,35 @@ public class Album {
 	private Artist artist;
 
 	private String title;
-	
 
 	@OneToMany
 	private Collection<Song> songs;
-	
+
 	private String imageUrl;
 	private String recordLabel;
-	
+
+	private List<String> comments;
 
 	public Album(Artist artist, String title, String imageUrl, String recordLabel) {
 		this.artist = artist;
 		this.title = title;
 		this.imageUrl = imageUrl;
 		this.recordLabel = recordLabel;
+		this.comments = new ArrayList<String>();
 	}
+
 	public Album(String title) {
 		this.title = title;
 	}
+
 	@SuppressWarnings("unused")
 	private Album() {
-		
+
 	}
 
 	public Long getId() {
 		return id;
 	}
-
 
 	public Collection<Song> getSongs() {
 		return songs;
@@ -64,13 +66,25 @@ public class Album {
 	public String getRecordLabel() {
 		return recordLabel;
 	}
-	
+
+	public List<String> getComments() {
+		return comments;
+	}
+
 	public void addSong(Song song) {
 		if (doesNotContainSong(song)) {
 			this.songs.add(song);
 		}
 	}
-	
+
+	public void updateTitle(String title) {
+		this.title = title;
+	}
+
+	public void addComment(String comment) {
+		comments.add(comment);
+	}
+
 	private boolean doesNotContainSong(Song song) {
 		return !songs.contains(song);
 	}
@@ -96,9 +110,5 @@ public class Album {
 			return false;
 		return true;
 	}
-	public void updateTitle(String title) {
-		this.title = title;
-		
-	}
-	
+
 }
