@@ -6,15 +6,24 @@ describe("Html", () => {
 
         describe("should return new html object", () => {
 
+
             test("should be an object", () => {
-                expect(typeof Html().create("h1")).toBe("object");
+
+                expect(typeof Html().create('h1')).toBe('object');
 
             })
-            test("Throws error if given an improper HTML element", () => {
+
+            test('Throws an error if no element is passed', () => {
                 expect(() => {
                     Html().create()
-                }).toThrow('Invalid Html element')
+                }).toThrow('Must pass a HTML element')
 
+            })
+
+            test('Throws an error if an invalid element is passed', () => {
+                expect(() => {
+                    Html().create('asdfasd')
+                }).toThrow('Invalid html element')
             })
         })
     })
