@@ -22,6 +22,9 @@ public class Album {
 
 	@OneToMany
 	private Collection<Song> songs;
+	
+	@OneToMany
+	private Collection<Comment> comments;
 
 	private String imageUrl;
 	private String recordLabel;

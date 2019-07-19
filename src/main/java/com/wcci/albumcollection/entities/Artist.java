@@ -17,6 +17,9 @@ public class Artist {
 
 	@OneToMany(mappedBy = "artist")
 	private Collection<Album> albums;
+	
+	@OneToMany
+	private Collection<Comment> comments;
 
 	private String name;
 	private String imageUrl;
