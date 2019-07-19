@@ -16,39 +16,67 @@
             <nav class="nav">
                 <ul class="nav__list">
                     <li class="nav__list-item"><a href="#">HOME</a></li>
-                    <li class="nav__list-item"><a href=" #">ARTISTS</a></li>
-                    <li class="nav__list-item"><a href=" #">ALBUMS</a></li>
-                    <li class="nav__list-item"><a href=" #">SONGS</a></li>
+                    <li class="nav__list-item"><a href="allArtistsTemplate.html">ARTISTS</a></li>
+                    <li class="nav__list-item"><a href="allAlbumsTemplate.html">ALBUMS</a></li>
+                    <li class="nav__list-item"><a href="allSongsTemplate.html">SONGS</a></li>
                 </ul>
             </nav>
         </header>
         <main>
             <div class="container">
-                <section class="content">All Songs List:
-                    <ul class="content-list">
-                        <li class="content-list__item">Song1</li>
-                        <li class="content-list__item">Song2</li>
-                    </ul>
+                <section class="block">
+                    <h1 class="block__title">All Albums List:</h1>
+                    <div class="block-list">
+                        <article class="card">
+                            <img class="card__image" src="http://lorempixel.com/400/200" alt="alt pic">
+                            <section class="card__list">
+                                <h2 class="card__list-item">Song title</h2>
+                                <a class="card__list-item" href="#">link to song</a>
+                            </section>
+                        </article>
+                        <article class="card">
+                            <img class="card__image" src="http://lorempixel.com/400/200" alt="alt pic">
+                            <section class="card__list">
+                                <h2 class="card__list-item">Song title</h2>
+                                <a class="card__list-item" href="#">link to song</a>
+                            </section>
+                        </article>
+                        <article class="card">
+                            <img class="card__image" src="http://lorempixel.com/400/200" alt="alt pic">
+                            <section class="card__list">
+                                <h2 class="card__list-item">Song title</h2>
+                                <a class="card__list-item" href="#">link to song</a>
+                            </section>
+                        </article>
+                        <article class="card">
+                            <img class="card__image" src="http://lorempixel.com/400/200" alt="alt pic">
+                            <section class="card__list">
+                                <h2 class="card__list-item">Song title</h2>
+                                <a class="card__list-item" href="#">link to song</a>
+                            </section>
+                        </article>
+                    </div>
                 </section>
                 <section class="form-container">
                     <form class="form" action="#">
                         <h2 class="form__title">Input a song</h2>
                         <label class="form__label">Album title:
-                            <select class="form__select">
+                            <select class="form__select" required>
                                 <option selected></option>
                                 <option value="rebasAlbum1">rebasAlbum1</option>
                                 <option value="lilNasXsAlbum1">lilNasXsAlbum1</option>
                             </select>
                         </label>
                         <label class="form__label">Title:
-                            <input class="form__input" name="title" type="text">
+                            <input class="form__input" name="title" type="text" required>
                         </label>
                         <label class="form__label">Link:
-                            <input class="form__input" name="link" type="text">
+                            <input class="form__input" name="link" type="text" required>
                         </label>
                         <label class="form__label" class="">Duration:
-                            <input class="form__input" name="duration" type="text">
+                            <input class="form__input" name="duration" type="text" required>
                         </label>
+                        <button class="form__button">Submit</button>
                     </form>
                 </section>
             </div>

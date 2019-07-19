@@ -16,39 +16,80 @@
             <nav class="nav">
                 <ul class="nav__list">
                     <li class="nav__list-item"><a href="#">HOME</a></li>
-                    <li class="nav__list-item"><a href=" #">ARTISTS</a></li>
-                    <li class="nav__list-item"><a href=" #">ALBUMS</a></li>
-                    <li class="nav__list-item"><a href=" #">SONGS</a></li>
+                    <li class="nav__list-item"><a href="allArtistsTemplate.html">ARTISTS</a></li>
+                    <li class="nav__list-item"><a href="allAlbumsTemplate.html">ALBUMS</a></li>
+                    <li class="nav__list-item"><a href="allSongsTemplate.html">SONGS</a></li>
                 </ul>
             </nav>
         </header>
         <main>
             <div class="container">
-                <section class="content">
-                    <ul class="content-list">All Albums List:
-                        <li class="content-list__item">Album1</li>
-                        <li class="content-list__item">Album2</li>
-                    </ul>
+                <section class="block">
+                    <h1 class="block__title">All Albums List:</h1>
+                    <div class="block-list">
+                        <article class="card">
+                            <img class="card__image" src="http://lorempixel.com/400/200/" alt="alt pic">
+                            <section class="card__list">
+                                <h2 class="card__list-item">Album Title</h2>
+                                <h4 class="card__list-item">Artist Name</h4>
+                                <p class="card__list-item">Record Label</p>
+                            </section>
+                        </article>
+                        <article class="card">
+                            <img class="card__image" src="http://lorempixel.com/400/200/" alt="alt pic">
+                            <section class="card__list">
+                                <h2 class="card__list-item">Album Title</h2>
+                                <h4 class="card__list-item">Artist Name</h4>
+                                <p class="card__list-item">Record Label</p>
+                            </section>
+                        </article>
+                        <article class="card">
+                            <img class="card__image" src="http://lorempixel.com/400/200/" alt="alt pic">
+                            <section class="card__list">
+                                <h2 class="card__list-item">Album Title</h2>
+                                <h4 class="card__list-item">Artist Name</h4>
+                                <p class="card__list-item">Record Label</p>
+                            </section>
+                        </article>
+                        <article class="card">
+                            <img class="card__image" src="http://lorempixel.com/400/200/" alt="alt pic">
+                            <section class="card__list">
+                                <h2 class="card__list-item">Album Title</h2>
+                                <h4 class="card__list-item">Artist Name</h4>
+                                <p class="card__list-item">Record Label</p>
+                            </section>
+                        </article>
+                        <article class="card">
+                            <img class="card__image" src="http://lorempixel.com/400/200/" alt="alt pic">
+                            <section class="card__list">
+                                <h2 class="card__list-item">Album Title</h2>
+                                <h4 class="card__list-item">Artist Name</h4>
+                                <p class="card__list-item">Record Label</p>
+                            </section>
+                        </article>
+                        </ul>
+                    </div>
                 </section>
                 <section class="form-container">
                     <form class="form" action="#">
                         <h2 class="form__title">Input an album</h2>
                         <label class="form__label">Artist name:
-                            <select class="form__select">
+                            <select class="form__select" required>
                                 <option selected></option>
                                 <option value="Reba">Reba</option>
                                 <option value="Lil Nas X">Lil Nas X</option>
                             </select>
                         </label>
                         <label class="form__label">Title:
-                            <input class="form__input" name="title" type="text">
+                            <input class="form__input" name="title" type="text" required>
                         </label>
                         <label class="form__label">ImageURL:
-                            <input class="form__input" name="imageURL" type="text">
+                            <input class="form__input" name="imageURL" type="text" required>
                         </label>
                         <label class="form__label" class="">Record label:
-                            <input class="form__input" name="recordLabel" type="text">
+                            <input class="form__input" name="recordLabel" type="text" required>
                         </label>
+                        <button class="form__button">Submit</button>
                     </form>
                 </section>
             </div>
