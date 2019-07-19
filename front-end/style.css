@@ -47,7 +47,7 @@ ul {
 
 .block-list {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr;
   grid-gap: 1rem;
 }
 
@@ -143,6 +143,26 @@ ul {
 
 .container {
   margin: 3.25rem 2rem 2rem 2rem;
+}
+
+/* MEDIA QUERIES */
+
+@media (min-width: 442px) {
+  .block-list {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 591px) {
+  .block-list {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+@media (min-width: 818px) {
+  .block-list {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
 }
 
 /* JAVASCRIPT CLASS */
