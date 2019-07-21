@@ -38,4 +38,8 @@ class Html {
         return this
     }
 
+    text() {
+        return this.element.textContent
+    }
+
 }

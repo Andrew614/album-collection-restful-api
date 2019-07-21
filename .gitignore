@@ -6,6 +6,7 @@ build/
 !**/src/test/**
 bin/
 node_modules/
+coverage/
 
 ### STS ###
 .apt_generated

@@ -88,5 +88,11 @@ describe("Html", () => {
             text.render().textContent = "This is text";
             expect(text.text()).toBe("This is text")
         })
+        test('Should add text to element', () => {
+            const text = "add me to the element"
+            const element = Html().create('p')
+            element.text(text)
+            expect(element.text()).toBe(text)
+        })
     })
 })
