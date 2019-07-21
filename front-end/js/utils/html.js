@@ -16,19 +16,26 @@ class Html {
 
         return this;
     }
-    addClass(classToAdd){
-        if (this.element.classList.contains(classToAdd)){
-         throw new Error('duplicate class error')}
+    addClass(classToAdd) {
+        if (this.element.classList.contains(classToAdd)) {
+            throw new Error('duplicate class error')
+        }
 
         this.element.classList.add(classToAdd)
         return this;
     }
-    addChild(childToAdd){
+    addChild(childToAdd) {
         this.element.append(childToAdd.render())
         return this
     }
-    render(){
+    render() {
         return this.element
+    }
+
+    replace(replaceChild) {
+        this.element.innerHTML = '';
+        this.addChild(replaceChild)
+        return this
     }
 
 }
