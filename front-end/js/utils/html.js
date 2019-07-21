@@ -38,8 +38,13 @@ class Html {
         return this
     }
 
-    text() {
-        return this.element.textContent
+    text(textToAdd) {
+        if (textToAdd === undefined) {
+            return this.element.textContent
+        }
+        this.element.textContent = textToAdd
+
+        return this
     }
 
 }
