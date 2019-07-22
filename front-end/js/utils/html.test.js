@@ -82,6 +82,17 @@ describe("Html", () => {
 
         })
     })
+
+    describe('select', () => {
+        test('should return an element', () => {
+            const navElement = Html().create('nav');
+            const ulElement = Html().create('ul');
+            ulElement.text('should return this');
+            divElement.addChild(ulElement);
+            expect(divElement.select('ul').text()).toBe('should return this')
+        })
+    })
+
     describe('text', () => {
         test('Should return text', () => {
             const text = Html().create("p")
