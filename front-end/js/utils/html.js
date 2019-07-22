@@ -3,6 +3,33 @@ export default function () {
 }
 
 class Html {
+
+    addAttribute(attributeToSet, attributeValue) {
+        this.element.setAttribute(attributeToSet, attributeValue);
+
+        return this;
+    }
+
+    addChild(childToAdd) {
+        this.element.append(childToAdd.render())
+        return this
+    }
+
+    addClass(classToAdd) {
+        if (this.element.classList.contains(classToAdd)) {
+            throw new Error('duplicate class error')
+        }
+
+        this.element.classList.add(classToAdd)
+        return this;
+    }
+
+    click(callback) {
+        this.element.addEventListener('click', callback)
+
+        return this
+    }
+
     create(elementType) {
         if (!elementType) {
             throw new Error('Must pass a HTML element')
@@ -16,20 +43,24 @@ class Html {
 
         return this;
     }
-    addClass(classToAdd) {
-        if (this.element.classList.contains(classToAdd)) {
-            throw new Error('duplicate class error')
-        }
 
-        this.element.classList.add(classToAdd)
+    html(contentToAdd) {
+        if (contentToAdd === undefined) {
+            return this.element.innerHTML;
+        }
+        this.element.innerHTML = contentToAdd;
+
         return this;
     }
-    addChild(childToAdd) {
-        this.element.append(childToAdd.render())
-        return this
-    }
+
     render() {
         return this.element
+    }
+
+    replace(replaceChild) {
+        this.element.innerHTML = '';
+        this.addChild(replaceChild)
+        return this
     }
 
     select(query) {
@@ -41,12 +72,6 @@ class Html {
         else {
             this.element = selection
         }
-        return this
-    }
-
-    replace(replaceChild) {
-        this.element.innerHTML = '';
-        this.addChild(replaceChild)
         return this
     }
 
