@@ -88,8 +88,9 @@ describe("Html", () => {
             const navElement = Html().create('nav');
             const ulElement = Html().create('ul');
             ulElement.text('should return this');
-            divElement.addChild(ulElement);
-            expect(divElement.select('ul').text()).toBe('should return this')
+            navElement.addChild(ulElement);
+            console.log(ulElement.text)
+            expect(navElement.select('ul').text()).toEqual('should return this')
         })
     })
 

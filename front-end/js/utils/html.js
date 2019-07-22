@@ -32,6 +32,18 @@ class Html {
         return this.element
     }
 
+    select(query) {
+        const selection = document.querySelectorAll(query)
+
+        if (selection.length === 1) {
+            this.element = selection[0]
+        }
+        else {
+            this.element = selection
+        }
+        return this
+    }
+
     replace(replaceChild) {
         this.element.innerHTML = '';
         this.addChild(replaceChild)
