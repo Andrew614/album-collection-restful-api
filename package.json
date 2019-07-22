@@ -1,0 +1,8 @@
+{
+  "name": "album-collection",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/Andrew614/album-collection.git",
+  "author": "matthew-laine <matthew.i.laine@gmail.com>",
+  "license": "MIT"
+}
