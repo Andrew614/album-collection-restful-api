@@ -1,4 +1,6 @@
 import Html from './html.js'
+const jsdom = require("jsdom");
+const { JSDOM } = jsdom;
 
 describe("Html", () => {
 
@@ -84,14 +86,17 @@ describe("Html", () => {
     })
 
     describe('select', () => {
-        test('should return an element', () => {
-            const navElement = Html().create('nav');
-            const ulElement = Html().create('ul');
-            ulElement.text('should return this');
-            navElement.addChild(ulElement);
-            console.log(ulElement.text)
-            expect(navElement.select('ul').text()).toEqual('should return this')
-        })
+        test('should select h1 element', () => {
+
+            const dom = new JSDOM(`<div>
+              <h1>JSDOM mocking</h1>
+            </div>`);
+
+            const select = jest.fn(Html().select('h1').text());
+            select.mockReturnValue('JSDOM mocking');
+            expect(select()).toBe(dom.window.document.querySelector('h1').textContent);
+
+        });
     })
 
     describe('text', () => {
