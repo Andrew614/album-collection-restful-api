@@ -44,13 +44,15 @@ class Components {
     renderHeaderBlock(requestData) {
         const headerBlock = Html().create('header').addClass('main-header');
         const titleBlock = Html().create('h1').addClass('main-header__title').text("Album")
+        const nav = this.renderNavBlock();
         headerBlock.addChild(titleBlock);
+        headerBlock.addChild(nav);
         return headerBlock
     }
 
     renderNavBlock() {
         const navBlock = Html().create('nav').addClass('nav');
-        const navList = Html().create('ul').addClass('nav_list');
+        const navList = Html().create('ul').addClass('nav__list');
 
         const navListItemOne = Html().create('li')
             .addClass('nav__list-item')
@@ -69,7 +71,7 @@ class Components {
             .addChild(
                 Html().create('a')
                     .addAttribute('href', 'allArtistTemplate.html')
-                    .text("Artist")
+                    .text("Artists")
                     .click((event) => {
                         event.preventDefault()
                         this.renderPageArtist()
@@ -109,10 +111,55 @@ class Components {
     }
 
     renderFooter() {
-        const footer = Html().create('footer').addClass('footer')
-        const footerText = Html.create('small').addClass('footer__text').text('&copy; 2019');
-        footer.addChild(footer);
+        const footer = Html().create('footer').addClass('footer');
+        const footerText = Html().create('small').addClass('footer__text').html('&copy; 2019');
+        footer.addChild(footerText);
         return footer;
+    }
+    generateArticleCard() {
+        const article = Html().create('article').addClass('card');
+        const anchor = Html().create('a').addClass('card__anchor');
+        const img = Html().create('img').addClass('card__image').addAttribute('src', 'http://lorempixel.com/400/200').addAttribute('alt', 'alt picture');
+        const section = Html().create('section').addClass('card__item');
+        const sectionHeader = Html().create('h2').addClass('card__item--text').text('Artist');
+        section.addChild(sectionHeader);
+        anchor.addChild(img);
+        anchor.addChild(section);
+        article.addChild(anchor);
+        return article;
+    }
+
+    renderPageArtist() {
+        const app = this.getAppContext();
+        const wrapperDiv = this.getWrapperDiv();
+        const mainHeader = this.renderHeaderBlock();
+        const mainFooter = this.renderFooter();
+        const container = Html().create('div').addClass('container');
+
+        const block = Html().create('section').addClass('block');
+        const blockHeader = Html().create('h1').addClass('block__title').text('Artists');
+        const blockList = Html().create('div').addClass('block-list');
+        const listArticle1 = this.generateArticleCard();
+        const listArticle2 = this.generateArticleCard();
+        const listArticle3 = this.generateArticleCard();
+        const listArticle4 = this.generateArticleCard();
+        const listArticle5 = this.generateArticleCard();
+        const listArticle6 = this.generateArticleCard();
+        blockList.addChild(listArticle1);
+        blockList.addChild(listArticle2);
+        blockList.addChild(listArticle3);
+        blockList.addChild(listArticle4);
+        blockList.addChild(listArticle5);
+        blockList.addChild(listArticle6);
+        blockHeader.addChild(blockList);
+        block.addChild(blockHeader);
+
+        container.addChild(block);
+
+        wrapperDiv.addChild(mainHeader);
+        wrapperDiv.addChild(container);
+        wrapperDiv.addChild(mainFooter);
+        app.addChild(wrapperDiv);
     }
 
 }
