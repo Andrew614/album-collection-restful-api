@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "parcel ./src/index.html",
+    "dev": "parcel ./index.html",
     "test": "jest /js --colors --coverage --watch"
   },
   "devDependencies": {
@@ -14,6 +14,7 @@
     "jest": "^24.8.0"
   },
   "dependencies": {
+    "main": "^1000.0.1",
     "parcel-bundler": "^1.12.3"
   }
 }

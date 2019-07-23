@@ -1,5 +1,5 @@
 import Html from '../Html/html';
-import Api from "..Api/Api"
+import Api from "../Api/Api"
 
 export default () => new Components()
 

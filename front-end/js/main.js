@@ -1,5 +1,6 @@
 import Components from './utils/Components/Components'
 
 export default function main() {
-    Components().renderHeaderBlock();
+    const app = document.querySelector('#app');
+    app.append(Components().renderHeaderBlock());
 }
