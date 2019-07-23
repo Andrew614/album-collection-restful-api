@@ -62,6 +62,10 @@ ul {
   margin: 0 auto;
 }
 
+.card__anchor:hover {
+  color: var(--color-content);
+}
+
 .card img {
   height: auto;
   max-height: 40vh;
@@ -73,7 +77,7 @@ ul {
   transform: scale(1.05);
 }
 
-.card__list {
+.card__item {
   background-color: var(--color-header-footer);
   display: flex;
   flex-direction: column;
