@@ -344,7 +344,9 @@ function () {
     value: function renderHeaderBlock(requestData) {
       var headerBlock = (0, _html.default)().create('header').addClass('main-header');
       var titleBlock = (0, _html.default)().create('h1').addClass('main-header__title').text("Album");
+      var nav = this.renderNavBlock();
       headerBlock.addChild(titleBlock);
+      headerBlock.addChild(nav);
       return headerBlock;
     }
   }, {
@@ -353,7 +355,7 @@ function () {
       var _this = this;
 
       var navBlock = (0, _html.default)().create('nav').addClass('nav');
-      var navList = (0, _html.default)().create('ul').addClass('nav_list');
+      var navList = (0, _html.default)().create('ul').addClass('nav__list');
       var navListItemOne = (0, _html.default)().create('li').addClass('nav__list-item').addChild((0, _html.default)().create('a').addAttribute('href', '#').text("Home").click(function (event) {
         event.preventDefault();
 
@@ -385,11 +387,22 @@ function () {
     key: "renderFooter",
     value: function renderFooter() {
       var footer = (0, _html.default)().create('footer').addClass('footer');
-
-      var footerText = _html.default.create('small').addClass('footer__text').text('&copy; 2019');
-
-      footer.addChild(footer);
+      var footerText = (0, _html.default)().create('small').addClass('footer__text').html('&copy; 2019');
+      footer.addChild(footerText);
       return footer;
+    }
+  }, {
+    key: "renderPageHome",
+    value: function renderPageHome() {
+      var app = this.getAppContext();
+      var wrapperDiv = this.getWrapperDiv();
+      var mainHeader = this.renderHeaderBlock();
+      var mainFooter = this.renderFooter(); // const container = Html().create('div').addClass('container');
+
+      wrapperDiv.addChild(mainHeader);
+      wrapperDiv.addChild(mainFooter); // wrapperDiv.addChild(container);
+
+      app.addChild(wrapperDiv);
     }
   }]);
 
@@ -408,8 +421,7 @@ var _Components = _interopRequireDefault(require("./utils/Components/Components"
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function main() {
-  var app = document.querySelector('#app');
-  app.append((0, _Components.default)().renderHeaderBlock());
+  (0, _Components.default)().renderPageHome();
 }
 },{"./utils/Components/Components":"js/utils/Components/Components.js"}],"js/index.js":[function(require,module,exports) {
 "use strict";
@@ -447,7 +459,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64950" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49320" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

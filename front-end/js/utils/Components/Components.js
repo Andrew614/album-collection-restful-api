@@ -44,13 +44,15 @@ class Components {
     renderHeaderBlock(requestData) {
         const headerBlock = Html().create('header').addClass('main-header');
         const titleBlock = Html().create('h1').addClass('main-header__title').text("Album")
+        const nav = this.renderNavBlock();
         headerBlock.addChild(titleBlock);
+        headerBlock.addChild(nav);
         return headerBlock
     }
 
     renderNavBlock() {
         const navBlock = Html().create('nav').addClass('nav');
-        const navList = Html().create('ul').addClass('nav_list');
+        const navList = Html().create('ul').addClass('nav__list');
 
         const navListItemOne = Html().create('li')
             .addClass('nav__list-item')
@@ -109,10 +111,23 @@ class Components {
     }
 
     renderFooter() {
-        const footer = Html().create('footer').addClass('footer')
-        const footerText = Html.create('small').addClass('footer__text').text('&copy; 2019');
-        footer.addChild(footer);
+        const footer = Html().create('footer').addClass('footer');
+        const footerText = Html().create('small').addClass('footer__text').html('&copy; 2019');
+        footer.addChild(footerText);
         return footer;
+    }
+
+    renderPageHome() {
+        const app = this.getAppContext();
+        const wrapperDiv = this.getWrapperDiv();
+        const mainHeader = this.renderHeaderBlock();
+        const mainFooter = this.renderFooter();
+        // const container = Html().create('div').addClass('container');
+
+        wrapperDiv.addChild(mainHeader);
+        wrapperDiv.addChild(mainFooter);
+        // wrapperDiv.addChild(container);
+        app.addChild(wrapperDiv);
     }
 
 }

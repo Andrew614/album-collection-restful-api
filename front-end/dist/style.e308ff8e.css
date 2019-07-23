@@ -143,6 +143,7 @@ ul {
 
 .container {
   margin: 3.25rem 2rem 2rem 2rem;
+  /* min-height: 100vh; */
 }
 
 /* MEDIA QUERIES */
