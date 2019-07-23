@@ -35,10 +35,11 @@ html {
 
 a {
   text-decoration: none;
+  color: var(--color-content);
 }
 
 a:hover {
-  color: white;
+  color: grey;
 }
 
 ul {
