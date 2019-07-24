@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,10 +30,9 @@ public class ArtistController {
 		return artistRepo.findById(id).get();
 	}
 
-	@PostMapping("/artists/{name}")
-	public Artist postOneArtist(@PathVariable String name) {
-		Artist artist = new Artist(name);
-		return artistRepo.save(artist);
-
+	@PostMapping("/artists/")
+	public Iterable<Artist> postOneArtist(@RequestBody Artist artist) {
+		artistRepo.save(artist);
+		return artistRepo.findAll();
 	}
 }
