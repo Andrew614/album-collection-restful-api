@@ -30,7 +30,7 @@ public class ArtistController {
 		return artistRepo.findById(id).get();
 	}
 
-	@PostMapping("/artists/")
+	@PostMapping("/artists")
 	public Iterable<Artist> postOneArtist(@RequestBody Artist artist) {
 		artistRepo.save(artist);
 		return artistRepo.findAll();
