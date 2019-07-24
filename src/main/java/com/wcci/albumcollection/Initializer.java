@@ -130,12 +130,16 @@ public class Initializer implements CommandLineRunner {
 		artistRepo.save(lilNasX);
 		Tupac = new Artist("Tupac Shakur", "https://m.media-amazon.com/images/M/MV5BMTMwMTE2ODk0NV5BMl5BanBnXkFtZTYwMTE5MzQ3._V1_.jpg",
 				"June 16,1971", "New York City, New York");
+		artistRepo.save(Tupac);
 		Marshmello = new Artist("Marshmello", "https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/2016_Open_Beatz_-_Marshmello_-_by_2eight_-DSC_4448.jpg/800px-2016_Open_Beatz_-_Marshmello_-_by_2eight_-DSC_4448.jpg",
 				"May 19,1992", "Philadelphia, Pennsylvania");
+		artistRepo.save(Marshmello);
 		Willie = new Artist("Willie Nelson", "https://upload.wikimedia.org/wikipedia/commons/b/b0/Willie_Nelson_at_Farm_Aid_2009_-_Cropped.jpg",
 				"April 29,1933", "Abbott, Texas");
+		artistRepo.save(Willie);
 		Jack = new Artist("Jack Black", "https://upload.wikimedia.org/wikipedia/commons/4/48/2016_RiP_Tenacious_D_-_Jack_Black_-_by_2eight_-_8SC8891.jpg",
 				"August 28,1969", "Santa Monica, California");
+		artistRepo.save(Jack);
 	}
 
 }
