@@ -183,6 +183,33 @@ class Components {
         })
         return blockList;
     }
+
+    generateSongsList() {
+        const blockList = Html().create('div').addClass('block-list');
+        Api().getRequest('http://localhost:8080/api/songs', (songsList) => {
+            songsList.forEach((song) => {
+
+                const title = song.title;
+                const link = song.link;
+                const time = song.time;
+
+                const article = Html().create('article').addClass('card');
+                const section = Html().create('section').addClass('card__list');
+                const songTitle = Html().create('h2').addClass('card__list-item').text(title);
+                const songLink = Html().create('a').addClass('card__list-item').addAttribute('href', link).text(`play ${title}`);
+                const songTime = Html().create('p').addClass('card__list-item').text(time);
+
+                section.addChild(songTitle);
+                section.addChild(songLink);
+                section.addChild(songTime);
+                article.addChild(section);
+                blockList.addChild(article);
+            })
+        })
+
+        return blockList;
+    }
+
     renderPageArtist() {
         const app = this.getAppContext();
         const wrapperDiv = this.getWrapperDiv();
@@ -207,8 +234,6 @@ class Components {
     }
 
 
-
-
     renderPageAlbum() {
         const app = this.getAppContext();
         const wrapperDiv = this.getWrapperDiv();
@@ -219,6 +244,29 @@ class Components {
         const block = Html().create('section').addClass('block');
         const blockHeader = Html().create('h1').addClass('block__title').text('Album');
         const blockList = this.generateAlbumList();
+        blockHeader.addChild(blockList);
+        block.addChild(blockHeader);
+
+        container.addChild(block);
+
+        wrapperDiv.addChild(mainHeader);
+        wrapperDiv.addChild(container);
+        wrapperDiv.addChild(mainFooter);
+        app.addChild(wrapperDiv);
+        return app;
+
+    }
+
+    renderPageSongs() {
+        const app = this.getAppContext();
+        const wrapperDiv = this.getWrapperDiv();
+        const mainHeader = this.renderHeaderBlock();
+        const mainFooter = this.renderFooter();
+        const container = Html().create('div').addClass('container');
+
+        const block = Html().create('section').addClass('block');
+        const blockHeader = Html().create('h1').addClass('block__title').text('Songs');
+        const blockList = this.generateSongsList();
         blockHeader.addChild(blockList);
         block.addChild(blockHeader);
 
