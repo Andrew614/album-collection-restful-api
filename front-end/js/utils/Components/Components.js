@@ -154,19 +154,33 @@ class Components {
         return blockList;
     }
     generateAlbumList() {
-        const blockList = Html().create('div').addClass('block-list')
-        Api().getRequest('http://localhost:8080/api/albums', (responseCollection) => {
+        return this.generateBlockList("albums");
+    }
 
-            responseCollection.forEach((album) => {
+    generateBlockList(requestedData) {
+        const blockList = Html().create('div').addClass('block-list');
+        Api().getRequest(`http://localhost:8080/api/${requestedData}`, (responseCollection) => {
+            responseCollection.forEach((item) => {
+                let title;
+                let imageUrl;
+                let recordLabel;
 
-                const title = album.title
-                // const artist = album.artist
-                const imageUrl = album.imageUrl
-                const recordlabel = album.recordLabel
+                title = item.title;
+                if (item.name) {
+                    title = item.name
+                }
 
+                imageUrl = item.imageUrl;
+                if (!item.imageUrl) {
+                    imageUrl = '../../images/music.jpg'
+                }
 
+                if (item.recordLabel) {
+                    recordLabel = item.recordLabel;
+                }
+
+                const recordlabel = item.recordLabel;
                 const article = Html().create('article').addClass('card');
-
                 const anchor = Html().create('a').addClass('card__anchor').addAttribute('href', '#');
                 const img = Html().create('img').addClass('card__image').addAttribute('src', imageUrl).addAttribute('alt', 'alt picture');
                 const section = Html().create('section').addClass('card__item');
@@ -179,8 +193,8 @@ class Components {
                 anchor.addChild(section);
                 article.addChild(anchor);
                 blockList.addChild(article);
-            })
-        })
+            });
+        });
         return blockList;
     }
 
@@ -191,7 +205,7 @@ class Components {
 
                 const title = song.title;
                 const link = song.link;
-                const time = song.time;
+                const time = song.time; -
 
                 const article = Html().create('article').addClass('card');
                 const section = Html().create('section').addClass('card__list');
