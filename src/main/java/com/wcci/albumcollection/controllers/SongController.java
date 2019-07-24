@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,17 +29,12 @@ public class SongController {
 		return songRepo.findById(id).get();
 	}
 
-	@PostMapping("/songs/{title}")
-	public Song postOneSong(@PathVariable String title) {
-		return songRepo.save(new Song(title));
+	@PostMapping("/songs")
+	public Iterable<Song> postOneSong(Song song) {
+		songRepo.save(song);
+		return songRepo.findAll();
 	}
 	
-	@PutMapping("/songs/{id}/{newTitle}")
-	public Song putOneSong(@PathVariable Long id, @PathVariable String newTitle) {
-		Song songToModify = songRepo.findById(id).get();
-		songToModify.changeTitle(newTitle);
-		return songRepo.save(songToModify);
-	}
 	
 }
 
