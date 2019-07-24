@@ -23,14 +23,14 @@ public class Album {
 
 	private String title;
 
+
+	private String imageUrl;
+	private String recordLabel;
 	@OneToMany(mappedBy="album")
 	private Collection<Song> songs;
 	
 	@OneToMany
 	private Collection<Comment> comments;
-
-	private String imageUrl;
-	private String recordLabel;
 
 	public Album(Artist artist, String title, String imageUrl, String recordLabel) {
 		this.artist = artist;

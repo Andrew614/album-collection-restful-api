@@ -21,13 +21,13 @@ public class Song {
 	@JsonIgnore
 	private Album album;
 	
-	@OneToMany
-	private Collection<Comment> comments;
-	
 	
 	private String title;
 	private String link;
 	private String time;
+	
+	@OneToMany
+	private Collection<Comment> comments;
 	
 	
 	public Song(Album album, String title, String link, String time) {

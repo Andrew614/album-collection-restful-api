@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,7 +17,7 @@ public class AlbumController {
 
 	@Autowired
 	private AlbumRepository albumRepo;
-	
+
 	@GetMapping("/albums")
 	@CrossOrigin
 	public Iterable<Album> findAllAlbums() {
@@ -30,17 +29,10 @@ public class AlbumController {
 		return albumRepo.findById(id).get();
 	}
 
-	@PostMapping("/albums/{title}")
-	public Album postOneAlbum(@PathVariable String title) {
-		return albumRepo.save(new Album(title));
-
-	}
-	
-	@PutMapping("/albums/{id}/{title}")
-	public Album updateAlbumTitle(@PathVariable long id, @PathVariable String title) {
-		Album albumToUpdate = albumRepo.findById(id).get();
-		albumToUpdate.updateTitle(title);
-		return albumRepo.save(albumToUpdate);
+	@PostMapping("/albums")
+	public Iterable<Album> postOneAlbum(Album album) {
+		albumRepo.save(album);
+		return albumRepo.findAll();
 	}
 
 }

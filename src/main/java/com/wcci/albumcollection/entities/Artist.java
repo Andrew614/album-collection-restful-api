@@ -15,16 +15,16 @@ public class Artist {
 	@GeneratedValue
 	private Long id;
 
+	private String name;
+	private String imageUrl;
+	private String dateOfBirth;
+	private String homeTown;
+	
 	@OneToMany(mappedBy = "artist")
 	private Collection<Album> albums;
 	
 	@OneToMany
 	private Collection<Comment> comments;
-
-	private String name;
-	private String imageUrl;
-	private String dateOfBirth;
-	private String homeTown;
 
 	public Artist(String name, String imageUrl, String dateOfBirth, String homeTown) {
 		this.name = name;
