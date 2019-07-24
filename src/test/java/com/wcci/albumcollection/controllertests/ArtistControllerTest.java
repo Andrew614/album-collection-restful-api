@@ -4,6 +4,7 @@ package com.wcci.albumcollection.controllertests;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.contains;
 import static org.junit.Assert.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import java.util.Collections;
@@ -44,6 +45,13 @@ public class ArtistControllerTest {
 	public void shouldReturnASingleArtist() {
 		when(artistRepo.findById(1L)).thenReturn(Optional.of(mockArtist));
 		assertThat(underTest.findOneArtist(1L), is(mockArtist));
+	}
+	
+	@Test
+	public void shouldSaveAnArtist() {
+		when(artistRepo.save(any(Artist.class))).thenReturn(mockArtist);
+		when(artistRepo.findAll()).thenReturn(Collections.singletonList(mockArtist));
+		assertThat(underTest.postOneArtist(mockArtist), is(Collections.singletonList(mockArtist)));
 	}
 }
 
