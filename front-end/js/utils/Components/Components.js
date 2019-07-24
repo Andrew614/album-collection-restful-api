@@ -129,6 +129,33 @@ class Components {
         return article;
     }
 
+    generateArtistList() {
+        const blockList = Html().create('div').addClass('block-list')
+        const api = Api().getRequest('http://localhost:8080/api/artists', (responseCollection) => {
+            responseCollection.forEach((artist) => {
+                const name = artist.name
+                const imageUrl = artist.imageUrl
+                // const dateOfBirth = artist.dateOfBirth
+                // const homeTown = artist.homeTown
+
+                const article = Html().create('article').addClass('card');
+                const anchor = Html().create('a').addClass('card__anchor').addAttribute('href', '#');
+                const img = Html().create('img').addClass('card__image').addAttribute('src', imageUrl).addAttribute('alt', 'alt picture');
+                const section = Html().create('section').addClass('card__item');
+                const sectionHeader = Html().create('h2').addClass('card__item--text').text(name);
+                section.addChild(sectionHeader);
+                anchor.addChild(img);
+                anchor.addChild(section);
+                article.addChild(anchor);
+                blockList.addChild(article);
+            })
+        })
+        return blockList;
+
+
+
+    }
+
     renderPageArtist() {
         const app = this.getAppContext();
         const wrapperDiv = this.getWrapperDiv();
@@ -138,19 +165,7 @@ class Components {
 
         const block = Html().create('section').addClass('block');
         const blockHeader = Html().create('h1').addClass('block__title').text('Artists');
-        const blockList = Html().create('div').addClass('block-list');
-        const listArticle1 = this.generateArticleCard();
-        const listArticle2 = this.generateArticleCard();
-        const listArticle3 = this.generateArticleCard();
-        const listArticle4 = this.generateArticleCard();
-        const listArticle5 = this.generateArticleCard();
-        const listArticle6 = this.generateArticleCard();
-        blockList.addChild(listArticle1);
-        blockList.addChild(listArticle2);
-        blockList.addChild(listArticle3);
-        blockList.addChild(listArticle4);
-        blockList.addChild(listArticle5);
-        blockList.addChild(listArticle6);
+        const blockList = this.generateArtistList();
         blockHeader.addChild(blockList);
         block.addChild(blockHeader);
 
@@ -160,6 +175,10 @@ class Components {
         wrapperDiv.addChild(container);
         wrapperDiv.addChild(mainFooter);
         app.addChild(wrapperDiv);
+        return app;
+
     }
+
+
 
 }
