@@ -41,6 +41,7 @@ class Components {
         return formContainer;
     }
 
+
     renderHeaderBlock(requestData) {
         const headerBlock = Html().create('header').addClass('main-header');
         const titleBlock = Html().create('h1').addClass('main-header__title').text("Album")
@@ -151,11 +152,37 @@ class Components {
             })
         })
         return blockList;
-
-
-
     }
+    generateAlbumList() {
+        const blockList = Html().create('div').addClass('block-list')
+        Api().getRequest('http://localhost:8080/api/albums', (responseCollection) => {
 
+            responseCollection.forEach((album) => {
+
+                const title = album.title
+                // const artist = album.artist
+                const imageUrl = album.imageUrl
+                const recordlabel = album.recordLabel
+
+
+                const article = Html().create('article').addClass('card');
+
+                const anchor = Html().create('a').addClass('card__anchor').addAttribute('href', '#');
+                const img = Html().create('img').addClass('card__image').addAttribute('src', imageUrl).addAttribute('alt', 'alt picture');
+                const section = Html().create('section').addClass('card__item');
+                const recordLabels = Html().create('p').addClass('card__item').text(recordlabel);
+                const sectionHeader = Html().create('h2').addClass('card__item--text').text(title);
+                // console.log(title, article, img, section, recordLabels, sectionHeader)
+                section.addChild(sectionHeader);
+                section.addChild(recordLabels);
+                anchor.addChild(img);
+                anchor.addChild(section);
+                article.addChild(anchor);
+                blockList.addChild(article);
+            })
+        })
+        return blockList;
+    }
     renderPageArtist() {
         const app = this.getAppContext();
         const wrapperDiv = this.getWrapperDiv();
@@ -166,6 +193,32 @@ class Components {
         const block = Html().create('section').addClass('block');
         const blockHeader = Html().create('h1').addClass('block__title').text('Artists');
         const blockList = this.generateArtistList();
+        blockHeader.addChild(blockList);
+        block.addChild(blockHeader);
+
+        container.addChild(block);
+
+        wrapperDiv.addChild(mainHeader);
+        wrapperDiv.addChild(container);
+        wrapperDiv.addChild(mainFooter);
+        app.addChild(wrapperDiv);
+        return app;
+
+    }
+
+
+
+
+    renderPageAlbum() {
+        const app = this.getAppContext();
+        const wrapperDiv = this.getWrapperDiv();
+        const mainHeader = this.renderHeaderBlock();
+        const mainFooter = this.renderFooter();
+        const container = Html().create('div').addClass('container');
+
+        const block = Html().create('section').addClass('block');
+        const blockHeader = Html().create('h1').addClass('block__title').text('Album');
+        const blockList = this.generateAlbumList();
         blockHeader.addChild(blockList);
         block.addChild(blockHeader);
 
