@@ -1,13 +1,10 @@
 package com.wcci.albumcollection.controllertests.web_layer_test;
 
-import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.Collections;
@@ -19,6 +16,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -72,22 +70,15 @@ public class SongControllerWebLayerTest {
 				.andExpect(content().contentType("application/json;charset=UTF-8")).andExpect(content().json("{}"))
 				.andExpect(content().json(mapper.writeValueAsString(testSong), true));
 	}
-
+	
 	@Test
-	public void postSingleSong() throws Exception {
+	public void createSingleSong() throws Exception {
 		when(songRepo.save(any(Song.class))).thenReturn(testSong);
-		mockMvc.perform(post("/api/songs/title1").content("title1")).andExpect(status().isOk())
-				.andExpect(jsonPath("$.title", is("title1")));
+		when(songRepo.findAll()).thenReturn(Collections.singletonList(testSong));
+		mockMvc.perform(post("/api/songs")
+				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.content(mapper.writeValueAsString(testSong)))
+				.andExpect(status().isOk())
+				.andExpect(content().json(mapper.writeValueAsString(Collections.singletonList(testSong))));
 	}
-
-	@Test
-	public void shouldChangeSongTitle() throws Exception {
-		when(songRepo.findById(1L)).thenReturn(Optional.of(testSong));
-		String title = "other title";
-		when(songRepo.save(any(Song.class))).thenReturn(new Song(title));
-
-		mockMvc.perform(put("/api/songs/1/" + title)).andExpect(status().isOk())
-				.andExpect(jsonPath("$.title", is("other title")));
-	}
-
 }
