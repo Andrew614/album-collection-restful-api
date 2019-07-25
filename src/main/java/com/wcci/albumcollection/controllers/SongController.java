@@ -25,6 +25,7 @@ public class SongController {
 	}
 
 	@GetMapping("/songs/{id}")
+	@CrossOrigin
 	public Song findOneSong(@PathVariable Long id) {
 		return songRepo.findById(id).get();
 	}

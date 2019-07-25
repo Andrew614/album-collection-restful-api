@@ -26,6 +26,7 @@ public class ArtistController {
 	}
 
 	@GetMapping("/artists/{id}")
+	@CrossOrigin
 	public Artist findOneArtist(@PathVariable Long id) {
 		return artistRepo.findById(id).get();
 	}
