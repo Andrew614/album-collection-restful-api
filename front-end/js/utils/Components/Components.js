@@ -1,5 +1,6 @@
 import Html from '../Html/html';
-import Api from "../Api/Api"
+import Api from "../Api/Api";
+import pictureUrl from "../../../images/music.jpg"
 
 export default () => new Components()
 
@@ -119,181 +120,92 @@ class Components {
     }
     generateArticleCard() {
         const article = Html().create('article').addClass('card');
-        const anchor = Html().create('a').addClass('card__anchor');
+        const linkToSingleItem = Html().create('a').addClass('card__anchor');
         const img = Html().create('img').addClass('card__image').addAttribute('src', 'http://lorempixel.com/400/200').addAttribute('alt', 'alt picture');
         const section = Html().create('section').addClass('card__item');
         const sectionHeader = Html().create('h2').addClass('card__item--text').text('Artist');
         section.addChild(sectionHeader);
-        anchor.addChild(img);
-        anchor.addChild(section);
-        article.addChild(anchor);
+        linkToSingleItem.addChild(img);
+        linkToSingleItem.addChild(section);
+        article.addChild(linkToSingleItem);
         return article;
     }
 
     generateArtistList() {
-        const blockList = Html().create('div').addClass('block-list')
-        const api = Api().getRequest('http://localhost:8080/api/artists', (responseCollection) => {
-            responseCollection.forEach((artist) => {
-                const name = artist.name
-                const imageUrl = artist.imageUrl
-                // const dateOfBirth = artist.dateOfBirth
-                // const homeTown = artist.homeTown
+        return this.generateContentBlockList('artists');
+    }
+    generateAlbumList() {
+        return this.generateContentBlockList('albums');
+    }
 
+    generateSongsList() {
+        return this.generateContentBlockList('songs');
+    }
+
+    renderPageArtists() {
+        return this.renderWholePage('artists');
+    }
+    
+    renderPageAlbums() {
+        return this.renderWholePage('albums');
+    }
+
+    renderPageSongs() {
+        return this.renderWholePage('songs');
+    }
+    
+    renderWholePage(requestedContent) {
+        const blockHeaderText = requestedContent.charAt(0).toUpperCase() + requestedContent.slice(1);
+        const app = this.getAppContext();
+        const wrapperDiv = this.getWrapperDiv();
+        const mainHeader = this.renderHeaderBlock();
+        const mainFooter = this.renderFooter();
+        const container = Html().create('div').addClass('container');
+        const block = Html().create('section').addClass('block');
+        const blockHeader = Html().create('h1').addClass('block__title').text(blockHeaderText);
+        const blockList = this.generateContentBlockList(requestedContent);
+        blockHeader.addChild(blockList);
+        block.addChild(blockHeader);
+        container.addChild(block);
+        wrapperDiv.addChild(mainHeader);
+        wrapperDiv.addChild(container);
+        wrapperDiv.addChild(mainFooter);
+        app.addChild(wrapperDiv);
+        return app;
+    }
+    generateContentBlockList(requestedContent) {
+        const blockList = Html().create('div').addClass('block-list');
+        const api = Api().getRequest(`http://localhost:8080/api/${requestedContent}`, (responseCollection) => {
+            responseCollection.forEach((item) => {
+                let name;
+                name = item.name;
+                if(item.title) {
+                    name = item.title;
+                }
+                let imageUrl;
+                imageUrl = item.imageUrl;
+                if (!imageUrl) {
+                    imageUrl = pictureUrl;
+                }
+                
+                let itemLink;
+                itemLink = '#'
+                if (item.link) {
+                    itemLink = item.link;
+                }
                 const article = Html().create('article').addClass('card');
-                const anchor = Html().create('a').addClass('card__anchor').addAttribute('href', '#');
+                const linkToSingleItem = Html().create('a').addClass('card__anchor').addAttribute('href', itemLink);
                 const img = Html().create('img').addClass('card__image').addAttribute('src', imageUrl).addAttribute('alt', 'alt picture');
                 const section = Html().create('section').addClass('card__item');
                 const sectionHeader = Html().create('h2').addClass('card__item--text').text(name);
                 section.addChild(sectionHeader);
-                anchor.addChild(img);
-                anchor.addChild(section);
-                article.addChild(anchor);
-                blockList.addChild(article);
-            })
-        })
-        return blockList;
-    }
-    generateAlbumList() {
-        return this.generateBlockList("albums");
-    }
-
-    generateBlockList(requestedData) {
-        const blockList = Html().create('div').addClass('block-list');
-        Api().getRequest(`http://localhost:8080/api/${requestedData}`, (responseCollection) => {
-            responseCollection.forEach((item) => {
-                let title;
-                let imageUrl;
-                let recordLabel;
-
-                title = item.title;
-                if (item.name) {
-                    title = item.name
-                }
-
-                imageUrl = item.imageUrl;
-                if (!item.imageUrl) {
-                    imageUrl = '../../images/music.jpg'
-                }
-
-                if (item.recordLabel) {
-                    recordLabel = item.recordLabel;
-                }
-
-                const recordlabel = item.recordLabel;
-                const article = Html().create('article').addClass('card');
-                const anchor = Html().create('a').addClass('card__anchor').addAttribute('href', '#');
-                const img = Html().create('img').addClass('card__image').addAttribute('src', imageUrl).addAttribute('alt', 'alt picture');
-                const section = Html().create('section').addClass('card__item');
-                const recordLabels = Html().create('p').addClass('card__item').text(recordlabel);
-                const sectionHeader = Html().create('h2').addClass('card__item--text').text(title);
-                // console.log(title, article, img, section, recordLabels, sectionHeader)
-                section.addChild(sectionHeader);
-                section.addChild(recordLabels);
-                anchor.addChild(img);
-                anchor.addChild(section);
-                article.addChild(anchor);
+                linkToSingleItem.addChild(img);
+                linkToSingleItem.addChild(section);
+                article.addChild(linkToSingleItem);
                 blockList.addChild(article);
             });
         });
         return blockList;
     }
-
-    generateSongsList() {
-        const blockList = Html().create('div').addClass('block-list');
-        Api().getRequest('http://localhost:8080/api/songs', (songsList) => {
-            songsList.forEach((song) => {
-
-                const title = song.title;
-                const link = song.link;
-                const time = song.time; -
-
-                const article = Html().create('article').addClass('card');
-                const section = Html().create('section').addClass('card__list');
-                const songTitle = Html().create('h2').addClass('card__list-item').text(title);
-                const songLink = Html().create('a').addClass('card__list-item').addAttribute('href', link).text(`play ${title}`);
-                const songTime = Html().create('p').addClass('card__list-item').text(time);
-
-                section.addChild(songTitle);
-                section.addChild(songLink);
-                section.addChild(songTime);
-                article.addChild(section);
-                blockList.addChild(article);
-            })
-        })
-
-        return blockList;
-    }
-
-    renderPageArtist() {
-        const app = this.getAppContext();
-        const wrapperDiv = this.getWrapperDiv();
-        const mainHeader = this.renderHeaderBlock();
-        const mainFooter = this.renderFooter();
-        const container = Html().create('div').addClass('container');
-
-        const block = Html().create('section').addClass('block');
-        const blockHeader = Html().create('h1').addClass('block__title').text('Artists');
-        const blockList = this.generateArtistList();
-        blockHeader.addChild(blockList);
-        block.addChild(blockHeader);
-
-        container.addChild(block);
-
-        wrapperDiv.addChild(mainHeader);
-        wrapperDiv.addChild(container);
-        wrapperDiv.addChild(mainFooter);
-        app.addChild(wrapperDiv);
-        return app;
-
-    }
-
-
-    renderPageAlbum() {
-        const app = this.getAppContext();
-        const wrapperDiv = this.getWrapperDiv();
-        const mainHeader = this.renderHeaderBlock();
-        const mainFooter = this.renderFooter();
-        const container = Html().create('div').addClass('container');
-
-        const block = Html().create('section').addClass('block');
-        const blockHeader = Html().create('h1').addClass('block__title').text('Album');
-        const blockList = this.generateAlbumList();
-        blockHeader.addChild(blockList);
-        block.addChild(blockHeader);
-
-        container.addChild(block);
-
-        wrapperDiv.addChild(mainHeader);
-        wrapperDiv.addChild(container);
-        wrapperDiv.addChild(mainFooter);
-        app.addChild(wrapperDiv);
-        return app;
-
-    }
-
-    renderPageSongs() {
-        const app = this.getAppContext();
-        const wrapperDiv = this.getWrapperDiv();
-        const mainHeader = this.renderHeaderBlock();
-        const mainFooter = this.renderFooter();
-        const container = Html().create('div').addClass('container');
-
-        const block = Html().create('section').addClass('block');
-        const blockHeader = Html().create('h1').addClass('block__title').text('Songs');
-        const blockList = this.generateSongsList();
-        blockHeader.addChild(blockList);
-        block.addChild(blockHeader);
-
-        container.addChild(block);
-
-        wrapperDiv.addChild(mainHeader);
-        wrapperDiv.addChild(container);
-        wrapperDiv.addChild(mainFooter);
-        app.addChild(wrapperDiv);
-        return app;
-
-    }
-
-
-
 }
+
