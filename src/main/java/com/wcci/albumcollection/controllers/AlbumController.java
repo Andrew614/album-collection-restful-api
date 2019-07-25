@@ -25,6 +25,7 @@ public class AlbumController {
 	}
 
 	@GetMapping("/albums/{id}")
+	@CrossOrigin
 	public Album findOneAlbum(@PathVariable Long id) {
 		return albumRepo.findById(id).get();
 	}

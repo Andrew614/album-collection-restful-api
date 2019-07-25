@@ -120,35 +120,31 @@ class Components {
     }
     generateArticleCard() {
         const article = Html().create('article').addClass('card');
-        const linkToSingleItem = Html().create('a').addClass('card__anchor');
+        const itemAnchorLink = Html().create('a').addClass('card__anchor');
         const img = Html().create('img').addClass('card__image').addAttribute('src', 'http://lorempixel.com/400/200').addAttribute('alt', 'alt picture');
         const section = Html().create('section').addClass('card__item');
         const sectionHeader = Html().create('h2').addClass('card__item--text').text('Artist');
         section.addChild(sectionHeader);
-        linkToSingleItem.addChild(img);
-        linkToSingleItem.addChild(section);
-        article.addChild(linkToSingleItem);
+        itemAnchorLink.addChild(img);
+        itemAnchorLink.addChild(section);
+        article.addChild(itemAnchorLink);
         return article;
     }
 
-    generateSingleArtistPage(id) {
-        const header = Html().create('h1').addClass('block__title');
-        const dateOfBirth = Html().create('p').addClass('block__info');
-        const homeTown = Html().create('p').addClass('block__info');
-        const blockList = Html().create('div').addClass('block-list');
-        if (!id) {
-            return blockList;
-        }
-        const api = Api().getRequest(`http://localhost:8080/api/artists/${id}`, (responseObject) => {
-            const artistName = responseObject.name;
-            const artistImageUrl = responseObject.imageUrl;
-            const artistDateOfBirth = responseObject.dateOfBirth;
-            const artistHomeTown = responseObject.homeTown;
-            const artistAlbums = responseObject.albums
-            header.text(artistName);
-            dateOfBirth.text(artistDateOfBirth);
-            homeTown.text(artistHomeTown);
-            albums.forEach((item) => {
+    generateSingleAlbumPage(idNumber) {
+        let header = Html().create('h1').addClass('block__title');
+        let image = Html().create('img').addClass('block__image');
+        let recordLabel = Html().create('p').addClass('block__info');
+        let blockList = Html().create('div').addClass('block-list');
+        const api = Api().getRequest(`http://localhost:8080/api/albums/${idNumber}`, (responseObject) => {
+            const albumTitle = responseObject.title;
+            const albumImageUrl = responseObject.imageUrl;
+            const albumRecordLabel = responseObject.recordLabel;
+            const albumSongs = responseObject.songs;
+            header = header.text(albumTitle);
+            image = image.addAttribute('src', albumImageUrl);
+            recordLabel = recordLabel.text(albumRecordLabel);
+            albumSongs.forEach((item) => {
                 let name;
                 name = item.name;
                 if (item.title) {
@@ -166,33 +162,108 @@ class Components {
                     itemLink = item.link;
                 }
                 const article = Html().create('article').addClass('card');
-                const linkToSingleItem = Html().create('a').addClass('card__anchor').addAttribute('href', itemLink);
+                const itemAnchorLink = Html().create('a').addClass('card__anchor').addAttribute('href', itemLink).click((event) => {
+                    if(item.albums) {
+                        event.preventDefault();
+                        this.generateSingleArtistPage(item.id);
+                    }
+                    if(item.songs) {
+                        event.preventDefault();
+                        this.generateSingleAlbumPage(item.id);
+                    }
+
+                });
                 const img = Html().create('img').addClass('card__image').addAttribute('src', imageUrl).addAttribute('alt', 'alt picture');
                 const section = Html().create('section').addClass('card__item');
                 const sectionHeader = Html().create('h2').addClass('card__item--text').text(name);
                 section.addChild(sectionHeader);
-                linkToSingleItem.addChild(img);
-                linkToSingleItem.addChild(section);
-                article.addChild(linkToSingleItem);
+                itemAnchorLink.addChild(img);
+                itemAnchorLink.addChild(section);
+                article.addChild(itemAnchorLink);
                 blockList.addChild(article);
             });
         });
         const container = this.getWrapperDiv().select('.container');
         container.replace(header);
+        container.addChild(image);
+        container.addChild(recordLabel);
+        container.addChild(blockList);
+    }
+
+    generateSingleArtistPage(idNumber) {
+        let header = Html().create('h1').addClass('block__title');
+        let image = Html().create('img').addClass('block__image');
+        let dateOfBirth = Html().create('p').addClass('block__info');
+        let homeTown = Html().create('p').addClass('block__info');
+        let blockList = Html().create('div').addClass('block-list');
+        const api = Api().getRequest(`http://localhost:8080/api/artists/${idNumber}`, (responseObject) => {
+            const artistName = responseObject.name;
+            const artistImageUrl = responseObject.imageUrl;
+            const artistDateOfBirth = responseObject.dateOfBirth;
+            const artistHomeTown = responseObject.homeTown;
+            const artistAlbums = responseObject.albums
+            header = header.text(artistName);
+            image = image.addAttribute('src', artistImageUrl);
+            dateOfBirth = dateOfBirth.text(artistDateOfBirth);
+            homeTown = homeTown.text(artistHomeTown);
+            artistAlbums.forEach((item) => {
+                let id;
+                id = item.id;
+                let name;
+                name = item.name;
+                if (item.title) {
+                    name = item.title;
+                }
+                let imageUrl;
+                imageUrl = item.imageUrl;
+                if (!imageUrl) {
+                    imageUrl = pictureUrl;
+                }
+
+                let itemLink;
+                itemLink = '#'
+                if (item.link) {
+                    itemLink = item.link;
+                }
+                const article = Html().create('article').addClass('card');
+                const itemAnchorLink = Html().create('a').addClass('card__anchor').addAttribute('href', itemLink).click((event) => {
+                    if(item.albums) {
+                        event.preventDefault();
+                        this.generateSingleArtistPage(id);
+                    }
+                    if(item.songs) {
+                        event.preventDefault();
+                        this.generateSingleAlbumPage(id);
+                    }
+
+                });
+                const img = Html().create('img').addClass('card__image').addAttribute('src', imageUrl).addAttribute('alt', 'alt picture');
+                const section = Html().create('section').addClass('card__item');
+                const sectionHeader = Html().create('h2').addClass('card__item--text').text(name);
+                section.addChild(sectionHeader);
+                itemAnchorLink.addChild(img);
+                itemAnchorLink.addChild(section);
+                article.addChild(itemAnchorLink);
+                blockList.addChild(article);
+            });
+        });
+        const container = this.getWrapperDiv().select('.container');
+        container.replace(header);
+        container.addChild(image);
         container.addChild(dateOfBirth);
         container.addChild(homeTown);
         container.addChild(blockList);
     }
 
     generateArtistList() {
-        return this.generateContentBlockList('artists');
+        return this.generateContentBlockListFromApi('artists');
     }
     generateAlbumList() {
-        return this.generateContentBlockList('albums');
+        return this.generateContentBlockListFromApi('albums');
     }
 
     generateSongsList() {
-        return this.generateContentBlockList('songs');
+        return this.generateContentBlockListFromApi('songs');
     }
 
     renderPageArtists() {
@@ -214,7 +285,7 @@ class Components {
     replaceContainerContent(requestedContent) {
         const container = this.getWrapperDiv().select('.container');
         container.replace(this.generateContentHeader(requestedContent));
-        container.addChild(this.generateContentBlockList(requestedContent));
+        container.addChild(this.generateContentBlockListFromApi(requestedContent));
     }
 
     generateContentHeader(requestedContent) {
@@ -228,7 +299,7 @@ class Components {
 
     renderWholePage(requestedContent) {
         const blockHeader = this.generateContentHeader(requestedContent);
-        const blockList = this.generateContentBlockList(requestedContent);
+        const blockList = this.generateContentBlockListFromApi(requestedContent);
 
         const app = this.getAppContext();
         const wrapperDiv = this.getWrapperDiv();
@@ -245,13 +316,16 @@ class Components {
         app.addChild(wrapperDiv);
         return app;
     }
-    generateContentBlockList(requestedContent) {
-        const blockList = Html().create('div').addClass('block-list');
+    generateContentBlockListFromApi(requestedContent) {
+        let blockList = Html().create('div').addClass('block-list');
         if (!requestedContent) {
             return blockList;
         }
-        const api = Api().getRequest(`http://localhost:8080/api/${requestedContent}`, (responseCollection) => {
+        const contentLink = `http://localhost:8080/api/${requestedContent}`;
+        Api().getRequest(contentLink, (responseCollection) => {
             responseCollection.forEach((item) => {
+                let id;
+                id = item.id;
                 let name;
                 name = item.name;
                 if (item.title) {
@@ -269,14 +343,24 @@ class Components {
                     itemLink = item.link;
                 }
                 const article = Html().create('article').addClass('card');
-                const linkToSingleItem = Html().create('a').addClass('card__anchor').addAttribute('href', itemLink);
+                const itemAnchorLink = Html().create('a').addClass('card__anchor').addAttribute('href', itemLink).click((event) => {
+                    if(item.albums) {
+                        event.preventDefault();
+                        this.generateSingleArtistPage(id);
+                    }
+                    if(item.songs) {
+                        event.preventDefault();
+                        this.generateSingleAlbumPage(id);
+                    }
+
+                });
                 const img = Html().create('img').addClass('card__image').addAttribute('src', imageUrl).addAttribute('alt', 'alt picture');
                 const section = Html().create('section').addClass('card__item');
                 const sectionHeader = Html().create('h2').addClass('card__item--text').text(name);
                 section.addChild(sectionHeader);
-                linkToSingleItem.addChild(img);
-                linkToSingleItem.addChild(section);
-                article.addChild(linkToSingleItem);
+                itemAnchorLink.addChild(img);
+                itemAnchorLink.addChild(section);
+                article.addChild(itemAnchorLink);
                 blockList.addChild(article);
             });
         });
