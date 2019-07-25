@@ -65,13 +65,13 @@ public class Initializer implements CommandLineRunner {
 		songRepo.save(rebasSong3);
 		Song rebasSong4 = new Song(rebasAlbum2, "So, So, So, Long",
 				"https://www.youtube.com/watch?v=z5mkOvKncuA", "3:40");
-		songRepo.save(rebasSong1);
+		songRepo.save(rebasSong4);
 		Song rebasSong5 = new Song(rebasAlbum2, "Sunday Kind of Love", "https://www.youtube.com/watch?v=we4scrBK8rI",
 				"3:00");
-		songRepo.save(rebasSong2);
+		songRepo.save(rebasSong5);
 		Song rebasSong6 = new Song(rebasAlbum2, "New Fool At an Old Game",
 				"https://www.youtube.com/watch?v=jymPMDrtrls", "3:49");
-		songRepo.save(rebasSong3);
+		songRepo.save(rebasSong6);
 		
 		
 		
