@@ -45,7 +45,7 @@ class Components {
 
     renderHeaderBlock(requestData) {
         const headerBlock = Html().create('header').addClass('main-header');
-        const titleBlock = Html().create('h1').addClass('main-header__title').text("Album")
+        const titleBlock = Html().create('h1').addClass('main-header__title').text("Virtual Vinyl")
         const nav = this.renderNavBlock();
         headerBlock.addChild(titleBlock);
         headerBlock.addChild(nav);
@@ -118,95 +118,55 @@ class Components {
         footer.addChild(footerText);
         return footer;
     }
-    generateArticleCard() {
-        const article = Html().create('article').addClass('card');
-        const itemAnchorLink = Html().create('a').addClass('card__anchor');
-        const img = Html().create('img').addClass('card__image').addAttribute('src', 'http://lorempixel.com/400/200').addAttribute('alt', 'alt picture');
-        const section = Html().create('section').addClass('card__item');
-        const sectionHeader = Html().create('h2').addClass('card__item--text').text('Artist');
-        section.addChild(sectionHeader);
-        itemAnchorLink.addChild(img);
-        itemAnchorLink.addChild(section);
-        article.addChild(itemAnchorLink);
-        return article;
-    }
 
     generateSingleAlbumPage(idNumber) {
-        let header = Html().create('h1').addClass('block__title');
-        let image = Html().create('img').addClass('block__image');
-        let recordLabel = Html().create('p').addClass('block__info');
-        let blockList = Html().create('div').addClass('block-list');
-        const api = Api().getRequest(`http://localhost:8080/api/albums/${idNumber}`, (responseObject) => {
-            const albumTitle = responseObject.title;
-            const albumImageUrl = responseObject.imageUrl;
-            const albumRecordLabel = responseObject.recordLabel;
-            const albumSongs = responseObject.songs;
-            header = header.text(albumTitle);
-            image = image.addAttribute('src', albumImageUrl);
-            recordLabel = recordLabel.text(albumRecordLabel);
-            albumSongs.forEach((item) => {
-                let name;
-                name = item.name;
-                if (item.title) {
-                    name = item.title;
-                }
-                let imageUrl;
-                imageUrl = item.imageUrl;
-                if (!imageUrl) {
-                    imageUrl = pictureUrl;
-                }
-
-                let itemLink;
-                itemLink = '#'
-                if (item.link) {
-                    itemLink = item.link;
-                }
-                const article = Html().create('article').addClass('card');
-                const itemAnchorLink = Html().create('a').addClass('card__anchor').addAttribute('href', itemLink).click((event) => {
-                    if(item.albums) {
-                        event.preventDefault();
-                        this.generateSingleArtistPage(item.id);
-                    }
-                    if(item.songs) {
-                        event.preventDefault();
-                        this.generateSingleAlbumPage(item.id);
-                    }
-
-                });
-                const img = Html().create('img').addClass('card__image').addAttribute('src', imageUrl).addAttribute('alt', 'alt picture');
-                const section = Html().create('section').addClass('card__item');
-                const sectionHeader = Html().create('h2').addClass('card__item--text').text(name);
-                section.addChild(sectionHeader);
-                itemAnchorLink.addChild(img);
-                itemAnchorLink.addChild(section);
-                article.addChild(itemAnchorLink);
-                blockList.addChild(article);
-            });
-        });
-        const container = this.getWrapperDiv().select('.container');
-        container.replace(header);
-        container.addChild(image);
-        container.addChild(recordLabel);
-        container.addChild(blockList);
+        const entityType = 'albums';
+        this.generateSingleItemPage(entityType, idNumber)
     }
 
     generateSingleArtistPage(idNumber) {
+        const entityType = 'artists'
+        this.generateSingleItemPage(entityType, idNumber);
+    }
+
+    generateSingleItemPage(entityType, idNumber) {
         let header = Html().create('h1').addClass('block__title');
         let image = Html().create('img').addClass('block__image');
-        let dateOfBirth = Html().create('p').addClass('block__info');
-        let homeTown = Html().create('p').addClass('block__info');
+        let infoP1 = Html().create('p').addClass('block__info');
+        let infoP2 = Html().create('p').addClass('block__info');
         let blockList = Html().create('div').addClass('block-list');
-        const api = Api().getRequest(`http://localhost:8080/api/artists/${idNumber}`, (responseObject) => {
-            const artistName = responseObject.name;
+        const api = Api().getRequest(`http://localhost:8080/api/${entityType}/${idNumber}`, (responseObject) => {
+            let title;
+            if (responseObject.name) {
+                title = responseObject.name;
+            } else {
+                title = responseObject.title;
+            }
             const artistImageUrl = responseObject.imageUrl;
-            const artistDateOfBirth = responseObject.dateOfBirth;
-            const artistHomeTown = responseObject.homeTown;
-            const artistAlbums = responseObject.albums
-            header = header.text(artistName);
+            let infoP1Text;
+            if (responseObject.dateOfBirth) {
+                infoP1Text = responseObject.dateOfBirth;
+            }
+            if (responseObject.recordLabel) {
+                infoP1Text = responseObject.recordLabel;
+            }
+            let infoP2Text;
+            if (responseObject.homeTown) {
+                infoP2Text = responseObject.homeTown;
+            }
+            let itemList;
+            if (responseObject.albums) {
+                itemList = responseObject.albums;
+            }
+            if (responseObject.songs) {
+                itemList = responseObject.songs
+            }
+
+            header = header.text(title);
             image = image.addAttribute('src', artistImageUrl);
-            dateOfBirth = dateOfBirth.text(artistDateOfBirth);
-            homeTown = homeTown.text(artistHomeTown);
-            artistAlbums.forEach((item) => {
+            infoP1 = infoP1.text(infoP1Text);
+            infoP2 = infoP2.text(infoP2Text);
+            itemList.forEach((item) => {
                 let id;
                 id = item.id;
                 let name;
@@ -219,23 +179,22 @@ class Components {
                 if (!imageUrl) {
                     imageUrl = pictureUrl;
                 }
-
                 let itemLink;
-                itemLink = '#'
+                itemLink = '#';
                 if (item.link) {
                     itemLink = item.link;
                 }
                 const article = Html().create('article').addClass('card');
-                const itemAnchorLink = Html().create('a').addClass('card__anchor').addAttribute('href', itemLink).click((event) => {
-                    if(item.albums) {
+                const itemAnchorLink = Html().create('a').addClass('card__anchor').addAttribute('href', itemLink).addAttribute('target', '_blank').click((event) => {
+                    console.log("test");
+                    if (item.albums) {
                         event.preventDefault();
                         this.generateSingleArtistPage(id);
                     }
-                    if(item.songs) {
+                    if (item.songs) {
                         event.preventDefault();
                         this.generateSingleAlbumPage(id);
                     }
-
                 });
                 const img = Html().create('img').addClass('card__image').addAttribute('src', imageUrl).addAttribute('alt', 'alt picture');
                 const section = Html().create('section').addClass('card__item');
@@ -250,8 +209,8 @@ class Components {
         const container = this.getWrapperDiv().select('.container');
         container.replace(header);
         container.addChild(image);
-        container.addChild(dateOfBirth);
-        container.addChild(homeTown);
+        container.addChild(infoP1);
+        container.addChild(infoP2);
         container.addChild(blockList);
     }
 
@@ -317,6 +276,7 @@ class Components {
         return app;
     }
     generateContentBlockListFromApi(requestedContent) {
+
         let blockList = Html().create('div').addClass('block-list');
         if (!requestedContent) {
             return blockList;
@@ -343,16 +303,15 @@ class Components {
                     itemLink = item.link;
                 }
                 const article = Html().create('article').addClass('card');
-                const itemAnchorLink = Html().create('a').addClass('card__anchor').addAttribute('href', itemLink).click((event) => {
-                    if(item.albums) {
+                const itemAnchorLink = Html().create('a').addClass('card__anchor').addAttribute('href', itemLink).addAttribute('target', '_blank').click((event) => {
+                    if (item.albums) {
                         event.preventDefault();
                         this.generateSingleArtistPage(id);
                     }
-                    if(item.songs) {
+                    if (item.songs) {
                         event.preventDefault();
                         this.generateSingleAlbumPage(id);
                     }
-
                 });
                 const img = Html().create('img').addClass('card__image').addAttribute('src', imageUrl).addAttribute('alt', 'alt picture');
                 const section = Html().create('section').addClass('card__item');
