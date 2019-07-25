@@ -128,7 +128,19 @@ class Components {
         const entityType = 'artists'
         this.generateSingleItemPage(entityType, idNumber);
     }
-
+    generateHomePage() {
+        let homeBody = Html().create('div').addClass('slideShow')
+        let heroImg = Html().create('div').addClass('heroImg')
+        let imgItem1 = Html().create('img').addAttribute('src', "images/750px_Willie_Nelson_Stockto-min-678x381.jpg").addAttribute('alt', "")
+        let imgItem2 = Html().create('img').addAttribute('src', "images/reba_624x351.jpg").addAttribute('alt', "")
+        let imgItem3 = Html().create('img').addAttribute('src', "images/jack-black-left_1023_682.jpg").addAttribute('alt', "")
+        const api = Api().getRequest('http://localhost:8080/api')
+        const container = this.getWrapperDiv().select('.container');
+        container.replace(header);
+        container.addChild(image);
+        container.addChild(recordLabel);
+        container.addChild(blockList);
+    }
     generateSingleItemPage(entityType, idNumber) {
         let header = Html().create('h1').addClass('block__title');
         let image = Html().create('img').addClass('block__image');
