@@ -5,211 +5,174 @@ import pictureUrl from "../../../images/music.jpg";
 export default () => new Components();
 
 class Components {
-  getAppContext() {
-    return Html().select("#app");
-  }
+    getAppContext() {
+        return Html().select("#app");
+    }
 
-  getWrapperDiv() {
-    return Html()
-      .create("div")
-      .addClass("wrapper");
-  }
+    getWrapperDiv() {
+        return Html()
+            .create("div")
+            .addClass("wrapper");
+    }
 
-  renderAlbumForm() {
-    const formContainer = Html()
-      .create("section")
-      .addClass("form-container");
-    const form = Html()
-      .create("form")
-      .addAttribute("action", "#");
-    const formTitle = Html()
-      .create("h2")
-      .addClass("form__title")
-      .text("Input an album");
-    const labelSelect = Html()
-      .create("label")
-      .addClass("form__label")
-      .text("Artist Name:");
-    const selectOption = Html().create("select");
-    form.addChild(formTitle);
-    form.addAttribute(labelSelect);
+    renderAlbumForm() {
+        const formContainer = Html().create('section').addClass('form-container');
+        const form = Html().create('form').addAttribute('action', '#');
+        const formTitle = Html().create('h2').addClass('form__title').text('Input an album');
+        const labelSelect = Html().create('label').addClass('form__label').text('Artist Name:');
+        const selectOption = Html().create('select');
+        form.addChild(formTitle)
+        form.addAttribute(labelSelect)
 
-    //need to come back and add artist options when we have API built out
+        //need to come back and add artist options when we have API built out
 
-    form.addAttribute(selectOption);
+        form.addAttribute(selectOption)
 
-    const inputList = ["Title", "ImageUrl", "Record Label"];
-    inputList.forEach(index => {
-      const label = Html()
-        .create("label")
-        .addClass("form__label")
-        .text(index);
-      const input = Html()
-        .create("input")
-        .addClass("form__input")
-        .addAttribute("name", index)
-        .addAttribute("type", "text")
-        .addAttribute("required", "");
-      form.addChild(label.addChild(input));
-    });
-    const button = Html()
-      .create("button")
-      .addChild("form__button");
-    form.addChild(button).text("Submit");
-    //this will go last
-    formContainer.addChild(form);
+        const inputList = ['Title', 'ImageUrl', 'Record Label']
+        inputList.forEach((index) => {
+            const label = Html().create('label').addClass('form__label').text(index);
+            const input = Html().create('input').addClass('form__input').addAttribute('name', index).addAttribute('type', 'text').addAttribute('required', '');
+            form.addChild(label.addChild(input))
+        })
+        const button = Html().create('button').addChild('form__button');
+        form.addChild(button).text('Submit')
+        //this will go last
+        formContainer.addChild(form);
 
-    return formContainer;
-  }
+        return formContainer;
+    }
 
-  renderHeaderBlock(requestData) {
-    const headerBlock = Html()
-      .create("header")
-      .addClass("main-header");
-    const titleBlock = Html()
-      .create("h1")
-      .addClass("main-header__title")
-      .text("Virtual Vinyl");
-    const nav = this.renderNavBlock();
-    headerBlock.addChild(titleBlock);
-    headerBlock.addChild(nav);
-    return headerBlock;
-  }
 
-  renderNavBlock() {
-    const navBlock = Html()
-      .create("nav")
-      .addClass("nav");
-    const navList = Html()
-      .create("ul")
-      .addClass("nav__list");
+    renderHeaderBlock(requestData) {
+        const headerBlock = Html().create('header').addClass('main-header');
+        const titleBlock = Html().create('h1').addClass('main-header__title').text("Virtual Vinyl")
+        const nav = this.renderNavBlock();
+        headerBlock.addChild(titleBlock);
+        headerBlock.addChild(nav);
+        return headerBlock
+    }
 
-    const navListItemOne = Html()
-      .create("li")
-      .addClass("nav__list-item")
-      .addChild(
-        Html()
-          .create("a")
-          .addAttribute("href", "#")
-          .text("Home")
-          .click(event => {
-            event.preventDefault();
-            this.renderPageHome();
-          })
-      );
-    const navListItemTwo = Html()
-      .create("li")
-      .addClass("nav__list-item")
-      .addChild(
-        Html()
-          .create("a")
-          .addAttribute("href", "allArtistTemplate.html")
-          .text("Artists")
-          .click(event => {
-            event.preventDefault();
-            this.renderPageArtists();
-          })
-      );
-    const navListItemThree = Html()
-      .create("li")
-      .addClass("nav__list-item")
-      .addChild(
-        Html()
-          .create("a")
-          .addAttribute("href", "allAlbumsTemplate.html")
-          .text("Albums")
-          .click(event => {
-            event.preventDefault();
-            this.renderPageAlbums();
-          })
-      );
-    const navListItemFour = Html()
-      .create("li")
-      .addClass("nav__list-item")
-      .addChild(
-        Html()
-          .create("a")
-          .addAttribute("href", "allSongsTemplate.html")
-          .text("Songs")
-          .click(event => {
-            event.preventDefault();
-            this.renderPageSongs();
-          })
-      );
-    navList.addChild(navListItemOne);
-    navList.addChild(navListItemTwo);
-    navList.addChild(navListItemThree);
-    navList.addChild(navListItemFour);
-    navBlock.addChild(navList);
-    return navBlock;
-  }
+    renderNavBlock() {
+        const navBlock = Html().create('nav').addClass('nav');
+        const navList = Html().create('ul').addClass('nav__list');
 
-  renderFooter() {
-    const footer = Html()
-      .create("footer")
-      .addClass("footer");
-    const footerText = Html()
-      .create("small")
-      .addClass("footer__text")
-      .html("&copy; 2019");
-    footer.addChild(footerText);
-    return footer;
-  }
+        const navListItemOne = Html().create('li')
+            .addClass('nav__list-item')
+            .addChild(
+                Html().create('a')
+                    .addAttribute('href', '#')
+                    .text("Home")
+                    .click((event) => {
+                        event.preventDefault()
+                        this.renderPageHome()
 
-  generateSingleAlbumPage(idNumber) {
-    const entityType = "albums";
-    this.generateSingleItemPage(entityType, idNumber);
-  }
+                    })
+            )
+        const navListItemTwo = Html().create('li')
+            .addClass('nav__list-item')
+            .addChild(
+                Html().create('a')
+                    .addAttribute('href', 'allArtistTemplate.html')
+                    .text("Artists")
+                    .click((event) => {
+                        event.preventDefault()
+                        this.renderPageArtists()
 
-  generateSingleArtistPage(idNumber) {
-    const entityType = "artists";
-    this.generateSingleItemPage(entityType, idNumber);
-  }
+                    })
+            )
+        const navListItemThree = Html().create('li')
+            .addClass('nav__list-item')
+            .addChild(
+                Html().create('a')
+                    .addAttribute('href', 'allAlbumsTemplate.html')
+                    .text("Albums")
+                    .click((event) => {
+                        event.preventDefault()
+                        this.renderPageAlbums()
 
-  generateSingleItemPage(entityType, idNumber) {
-    let header = Html()
-      .create("h1")
-      .addClass("block__title");
-    let image = Html()
-      .create("img")
-      .addClass("block__image");
-    let infoP1 = Html()
-      .create("p")
-      .addClass("block__info");
-    let infoP2 = Html()
-      .create("p")
-      .addClass("block__info");
-    let blockList = Html()
-      .create("div")
-      .addClass("block-list");
-    const api = Api().getRequest(
-      `http://localhost:8080/api/${entityType}/${idNumber}`,
-      responseObject => {
-        let title;
-        if (responseObject.name) {
-          title = responseObject.name;
-        } else {
-          title = responseObject.title;
-        }
-        const artistImageUrl = responseObject.imageUrl;
-        let infoP1Text;
-        if (responseObject.dateOfBirth) {
-          infoP1Text = responseObject.dateOfBirth;
-        }
-        if (responseObject.recordLabel) {
-          infoP1Text = responseObject.recordLabel;
-        }
-        let infoP2Text;
-        if (responseObject.homeTown) {
-          infoP2Text = responseObject.homeTown;
-        }
-        let itemList;
-        if (responseObject.albums) {
-          itemList = responseObject.albums;
-        }
-        if (responseObject.songs) {
-          itemList = responseObject.songs;
-        }
+                    })
+            )
+        const navListItemFour = Html().create('li')
+            .addClass('nav__list-item')
+            .addChild(
+                Html().create('a')
+                    .addAttribute('href', 'allSongsTemplate.html')
+                    .text("Songs")
+                    .click((event) => {
+                        event.preventDefault()
+                        this.renderPageSongs()
+
+                    })
+            )
+        navList.addChild(navListItemOne)
+        navList.addChild(navListItemTwo)
+        navList.addChild(navListItemThree)
+        navList.addChild(navListItemFour)
+        navBlock.addChild(navList)
+        return navBlock;
+    }
+
+    renderFooter() {
+        const footer = Html().create('footer').addClass('footer');
+        const footerText = Html().create('small').addClass('footer__text').html('&copy; 2019');
+        footer.addChild(footerText);
+        return footer;
+    }
+
+    generateSingleAlbumPage(idNumber) {
+        const entityType = 'albums';
+        this.generateSingleItemPage(entityType, idNumber)
+    }
+
+    generateSingleArtistPage(idNumber) {
+        const entityType = 'artists'
+        this.generateSingleItemPage(entityType, idNumber);
+    }
+    generateHomePage() {
+        let homeBody = Html().create('div').addClass('slideShow')
+        let heroImg = Html().create('div').addClass('heroImg')
+        let imgItem1 = Html().create('img').addAttribute('src', "images/750px_Willie_Nelson_Stockto-min-678x381.jpg").addAttribute('alt', "")
+        let imgItem2 = Html().create('img').addAttribute('src', "images/reba_624x351.jpg").addAttribute('alt', "")
+        let imgItem3 = Html().create('img').addAttribute('src', "images/jack-black-left_1023_682.jpg").addAttribute('alt', "")
+        const api = Api().getRequest('http://localhost:8080/api')
+        const container = this.getWrapperDiv().select('.container');
+        container.replace(header);
+        container.addChild(image);
+        container.addChild(recordLabel);
+        container.addChild(blockList);
+    }
+    generateSingleItemPage(entityType, idNumber) {
+        let header = Html().create('h1').addClass('block__title');
+        let image = Html().create('img').addClass('block__image');
+        let infoP1 = Html().create('p').addClass('block__info');
+        let infoP2 = Html().create('p').addClass('block__info');
+        let blockList = Html().create('div').addClass('block-list');
+        const api = Api().getRequest(`http://localhost:8080/api/${entityType}/${idNumber}`, (responseObject) => {
+            let title;
+            if (responseObject.name) {
+                title = responseObject.name;
+            } else {
+                title = responseObject.title;
+            }
+            const artistImageUrl = responseObject.imageUrl;
+            let infoP1Text;
+            if (responseObject.dateOfBirth) {
+                infoP1Text = responseObject.dateOfBirth;
+            }
+            if (responseObject.recordLabel) {
+                infoP1Text = responseObject.recordLabel;
+            }
+            let infoP2Text;
+            if (responseObject.homeTown) {
+                infoP2Text = responseObject.homeTown;
+            }
+            let itemList;
+            if (responseObject.albums) {
+                itemList = responseObject.albums;
+            }
+            if (responseObject.songs) {
+                itemList = responseObject.songs
+            }
 
         header = header.text(title);
         image = image.addAttribute("src", artistImageUrl);
