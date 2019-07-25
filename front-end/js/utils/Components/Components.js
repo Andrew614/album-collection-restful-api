@@ -76,7 +76,7 @@ class Components {
                     .text("Artists")
                     .click((event) => {
                         event.preventDefault()
-                        this.renderPageArtist()
+                        this.renderPageArtists()
 
                     })
             )
@@ -88,7 +88,7 @@ class Components {
                     .text("Albums")
                     .click((event) => {
                         event.preventDefault()
-                        this.renderPageArtist()
+                        this.renderPageAlbums()
 
                     })
             )
@@ -100,7 +100,7 @@ class Components {
                     .text("Songs")
                     .click((event) => {
                         event.preventDefault()
-                        this.renderPageSong()
+                        this.renderPageSongs()
 
                     })
             )
@@ -143,30 +143,49 @@ class Components {
     }
 
     renderPageArtists() {
-        return this.renderWholePage('artists');
+        this.replaceContainerContent('artists');
     }
     
     renderPageAlbums() {
-        return this.renderWholePage('albums');
+        this.replaceContainerContent('albums');
     }
 
     renderPageSongs() {
-        return this.renderWholePage('songs');
+        this.replaceContainerContent('songs');
+    }
+
+    renderPageHome() {
+        this.replaceContainerContent();
     }
     
+    replaceContainerContent(requestedContent) {
+        const container = this.getWrapperDiv().select('.container');
+        container.replace(this.generateContentHeader(requestedContent));
+        container.addChild(this.generateContentBlockList(requestedContent));
+    }
+
+    generateContentHeader(requestedContent) {
+        let contentHeaderText;
+        contentHeaderText = 'Home';
+        if(requestedContent) {
+            contentHeaderText = requestedContent.charAt(0).toUpperCase() + requestedContent.slice(1);
+        }
+        return Html().create('h1').addClass('block__title').text(contentHeaderText);
+    }
+
     renderWholePage(requestedContent) {
-        const blockHeaderText = requestedContent.charAt(0).toUpperCase() + requestedContent.slice(1);
+        const blockHeader = this.generateContentHeader(requestedContent);
+        const blockList = this.generateContentBlockList(requestedContent);
+
         const app = this.getAppContext();
         const wrapperDiv = this.getWrapperDiv();
         const mainHeader = this.renderHeaderBlock();
         const mainFooter = this.renderFooter();
         const container = Html().create('div').addClass('container');
         const block = Html().create('section').addClass('block');
-        const blockHeader = Html().create('h1').addClass('block__title').text(blockHeaderText);
-        const blockList = this.generateContentBlockList(requestedContent);
-        blockHeader.addChild(blockList);
-        block.addChild(blockHeader);
-        container.addChild(block);
+
+        container.addChild(blockHeader);
+        container.addChild(blockList);
         wrapperDiv.addChild(mainHeader);
         wrapperDiv.addChild(container);
         wrapperDiv.addChild(mainFooter);
@@ -175,6 +194,9 @@ class Components {
     }
     generateContentBlockList(requestedContent) {
         const blockList = Html().create('div').addClass('block-list');
+        if(!requestedContent) {
+            return blockList;
+        }
         const api = Api().getRequest(`http://localhost:8080/api/${requestedContent}`, (responseCollection) => {
             responseCollection.forEach((item) => {
                 let name;
