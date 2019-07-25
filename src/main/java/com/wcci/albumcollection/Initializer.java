@@ -31,8 +31,10 @@ public class Initializer implements CommandLineRunner {
 	Artist Jack;
 
 	Album rebasAlbum1;
+	Album rebasAlbum2;
 	Album lilNasXsAlbum1;
 	Album TupacsAlbum1;
+	Album TupacsAlbum2;
 	Album MarshmelloAlbum1;
 	Album WillieAlbum1;
 	Album JackAlbum1;
@@ -61,6 +63,18 @@ public class Initializer implements CommandLineRunner {
 		Song rebasSong3 = new Song(rebasAlbum1, "I Don't Think Love Ought to Be That Way",
 				"https://www.youtube.com/watch?v=2KvjOQuK2Mo", "2:40");
 		songRepo.save(rebasSong3);
+		Song rebasSong4 = new Song(rebasAlbum2, "So, So, So, Long",
+				"https://www.youtube.com/watch?v=z5mkOvKncuA", "3:40");
+		songRepo.save(rebasSong1);
+		Song rebasSong5 = new Song(rebasAlbum2, "Sunday Kind of Love", "https://www.youtube.com/watch?v=we4scrBK8rI",
+				"3:00");
+		songRepo.save(rebasSong2);
+		Song rebasSong6 = new Song(rebasAlbum2, "New Fool At an Old Game",
+				"https://www.youtube.com/watch?v=jymPMDrtrls", "3:49");
+		songRepo.save(rebasSong3);
+		
+		
+		
 		Song nasSong1 = new Song(lilNasXsAlbum1, "Old Town Road", "https://www.youtube.com/watch?v=w2Ov5jzm3j8",
 				"1:53");
 		songRepo.save(nasSong1);
@@ -97,6 +111,9 @@ public class Initializer implements CommandLineRunner {
 		rebasAlbum1 = new Album(reba, "Feel the Fire",
 				"https://upload.wikimedia.org/wikipedia/en/9/99/RebaFeeltheFire.jpg", "some record label");
 		albumRepo.save(rebasAlbum1);
+		rebasAlbum2 = new Album(reba, "Reba",
+				"https://upload.wikimedia.org/wikipedia/en/9/99/RebaFeeltheFire.jpg", "some record label");
+		albumRepo.save(rebasAlbum2);
 		lilNasXsAlbum1 = new Album(lilNasX, "Nasarati",
 				"https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Lil_Nas_X_%28cropped%29.jpg/330px-Lil_Nas_X_%28cropped%29.jpg",
 				"some record label");
