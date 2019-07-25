@@ -6,12 +6,12 @@
 }
 
 html {
-  --color-background: #c6c9d2;
-  --color-content: #c6c9d2;
-  --color-header-footer-content: #c6c9d2;
+  --color-background: rgb(177, 230, 248);
+  --color-content: rgb(182, 182, 182);
+  --color-header-footer-content: rgb(182, 182, 182);
   --color-header-footer: black;
 
-  background: linear-gradient(
+  /* background: linear-gradient(
     90deg,
     rgba(2, 0, 36, 1) 0%,
     rgba(2, 37, 11, 1) 7%,
@@ -28,7 +28,7 @@ html {
     rgba(9, 9, 121, 1) 100%,
     rgba(0, 212, 255, 0.15730042016806722) 100%,
     rgba(0, 212, 255, 0.2637429971988795) 100%
-  );
+  ); */
   font: 20px "Work Sans", sans-serif;
   color: var(--color-content);
 }
@@ -57,7 +57,7 @@ ul {
 }
 
 .card {
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.2s;
   margin: 0 auto;
 }
@@ -73,7 +73,7 @@ ul {
 }
 
 .card:hover {
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
   transform: scale(1.05);
 }
 
@@ -123,7 +123,7 @@ ul {
   justify-content: space-between;
   position: fixed;
   top: 0;
-  padding: 0.5rem 2rem;
+  padding: 0.74rem 2rem;
   width: 100%;
   z-index: 1;
 }
@@ -149,6 +149,13 @@ ul {
 .container {
   margin: 3.25rem 2rem 2rem 2rem;
   /* min-height: 100vh; */
+}
+
+.wrapper {
+  background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+    url("https://www.saga.co.uk/contentlibrary/saga/publishing/verticals/technology/home-technology/film-and-tv/transferring-vinyl-to-digital-shutterstock-222981331.jpg");
+  background-size: cover;
+  min-height: 100vh;
 }
 
 /* MEDIA QUERIES */

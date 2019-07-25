@@ -45,7 +45,7 @@ class Components {
 
     renderHeaderBlock(requestData) {
         const headerBlock = Html().create('header').addClass('main-header');
-        const titleBlock = Html().create('h1').addClass('main-header__title').text("Album")
+        const titleBlock = Html().create('h1').addClass('main-header__title').text("Virtual Vinyl")
         const nav = this.renderNavBlock();
         headerBlock.addChild(titleBlock);
         headerBlock.addChild(nav);
