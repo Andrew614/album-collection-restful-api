@@ -131,6 +131,59 @@ class Components {
         return article;
     }
 
+    generateSingleArtistPage(id) {
+        const header = Html().create('h1').addClass('block__title');
+        const dateOfBirth = Html().create('p').addClass('block__info');
+        const homeTown = Html().create('p').addClass('block__info');
+        const blockList = Html().create('div').addClass('block-list');
+        if (!id) {
+            return blockList;
+        }
+        const api = Api().getRequest(`http://localhost:8080/api/artists/${id}`, (responseObject) => {
+            const artistName = responseObject.name;
+            const artistImageUrl = responseObject.imageUrl;
+            const artistDateOfBirth = responseObject.dateOfBirth;
+            const artistHomeTown = responseObject.homeTown;
+            const artistAlbums = responseObject.albums
+            header.text(artistName);
+            dateOfBirth.text(artistDateOfBirth);
+            homeTown.text(artistHomeTown);
+            albums.forEach((item) => {
+                let name;
+                name = item.name;
+                if (item.title) {
+                    name = item.title;
+                }
+                let imageUrl;
+                imageUrl = item.imageUrl;
+                if (!imageUrl) {
+                    imageUrl = pictureUrl;
+                }
+
+                let itemLink;
+                itemLink = '#'
+                if (item.link) {
+                    itemLink = item.link;
+                }
+                const article = Html().create('article').addClass('card');
+                const linkToSingleItem = Html().create('a').addClass('card__anchor').addAttribute('href', itemLink);
+                const img = Html().create('img').addClass('card__image').addAttribute('src', imageUrl).addAttribute('alt', 'alt picture');
+                const section = Html().create('section').addClass('card__item');
+                const sectionHeader = Html().create('h2').addClass('card__item--text').text(name);
+                section.addChild(sectionHeader);
+                linkToSingleItem.addChild(img);
+                linkToSingleItem.addChild(section);
+                article.addChild(linkToSingleItem);
+                blockList.addChild(article);
+            });
+        });
+        const container = this.getWrapperDiv().select('.container');
+        container.replace(header);
+        container.addChild(dateOfBirth);
+        container.addChild(homeTown);
+        container.addChild(blockList);
+    }
+
     generateArtistList() {
         return this.generateContentBlockList('artists');
     }
@@ -145,7 +198,7 @@ class Components {
     renderPageArtists() {
         this.replaceContainerContent('artists');
     }
-    
+
     renderPageAlbums() {
         this.replaceContainerContent('albums');
     }
@@ -157,7 +210,7 @@ class Components {
     renderPageHome() {
         this.replaceContainerContent();
     }
-    
+
     replaceContainerContent(requestedContent) {
         const container = this.getWrapperDiv().select('.container');
         container.replace(this.generateContentHeader(requestedContent));
@@ -167,7 +220,7 @@ class Components {
     generateContentHeader(requestedContent) {
         let contentHeaderText;
         contentHeaderText = 'Home';
-        if(requestedContent) {
+        if (requestedContent) {
             contentHeaderText = requestedContent.charAt(0).toUpperCase() + requestedContent.slice(1);
         }
         return Html().create('h1').addClass('block__title').text(contentHeaderText);
@@ -194,14 +247,14 @@ class Components {
     }
     generateContentBlockList(requestedContent) {
         const blockList = Html().create('div').addClass('block-list');
-        if(!requestedContent) {
+        if (!requestedContent) {
             return blockList;
         }
         const api = Api().getRequest(`http://localhost:8080/api/${requestedContent}`, (responseCollection) => {
             responseCollection.forEach((item) => {
                 let name;
                 name = item.name;
-                if(item.title) {
+                if (item.title) {
                     name = item.title;
                 }
                 let imageUrl;
@@ -209,7 +262,7 @@ class Components {
                 if (!imageUrl) {
                     imageUrl = pictureUrl;
                 }
-                
+
                 let itemLink;
                 itemLink = '#'
                 if (item.link) {
